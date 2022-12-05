@@ -1,12 +1,43 @@
 package core
 
-type WhereFilter[T any] func(x T) bool
+import (
+	"github.com/jpshrader/go-linq/errors"
+)
 
-func Where[T any](filter WhereFilter[T], src []T) (ret []T) {
+type Matcher[T any] func(x T) bool
+
+func Any[T any](isMatch Matcher[T], src []T) bool {
 	for _, item := range src {
-		if filter(item) {
+		if isMatch(item) {
+			return true
+		}
+	}
+	return false
+}
+
+func All[T any](isMatch Matcher[T], src []T) bool {
+	for _, item := range src {
+		if !isMatch(item) {
+			return false
+		}
+	}
+	return true
+}
+
+func Where[T any](isMatch Matcher[T], src []T) (ret []T) {
+	for _, item := range src {
+		if isMatch(item) {
 			ret = append(ret, item)
 		}
 	}
 	return
+}
+
+func First[T any](isMatch Matcher[T], defaultVal T, src []T) (T, error) {
+	for _, item := range src {
+		if isMatch(item) {
+			return item, nil
+		}
+	}
+	return defaultVal, errors.NotFoundError{}
 }
