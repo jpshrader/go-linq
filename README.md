@@ -4,27 +4,27 @@
 
 ```
 import (
-	"fmt"
+    "fmt"
 
-	"github.com/jpshrader/go-linq"
+    "github.com/jpshrader/go-linq"
 )
 
 func isEven(x int) bool {
-	return x % 2 == 0
+    return x % 2 == 0
 }
 
 func isOdd(x int) bool {
-	return !isEven(x)
+    return !isEven(x)
 }
 
 func main() {
-	numbers := golinq.AsSlice([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+    numbers := golinq.AsSlice([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
 
-	evenNumbers := numbers.Where(isEven)
-	oddNumbers := numbers.Where(isOdd)
+    evenNumbers := numbers.Where(isEven)
+    oddNumbers := numbers.Where(isOdd)
 
-	fmt.Printf("even numbers: %v", evenNumbers)
-	fmt.Printf("odd numbers:  %v", oddNumbers)
+    fmt.Printf("even numbers: %v", evenNumbers)
+    fmt.Printf("odd numbers:  %v", oddNumbers)
 }
 ```
 
