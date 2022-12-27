@@ -11,17 +11,23 @@ func AsSlice[T any](slice []T) Slice[T] {
 }
 
 func (slice Slice[T]) Any(filter core.Matcher[T]) bool {
-	return core.Any(filter, slice)
+	return core.Any(slice, filter)
 }
 
 func (slice Slice[T]) All(filter core.Matcher[T]) bool {
-	return core.All(filter, slice)
+	return core.All(slice, filter)
 }
 
 func (slice Slice[T]) Where(filter core.Matcher[T]) Slice[T] {
-	return core.Where(filter, slice)
+	return core.Where(slice, filter)
 }
 
 func (slice Slice[T]) First(filter core.Matcher[T], defaultVal T) (T, error) {
-	return core.First(filter, defaultVal, slice)
+	return core.First(slice, filter, defaultVal)
+}
+
+type Map[K comparable, V any] map[K]V
+
+func AsMap[K comparable, V any](m map[K]V) Map[K, V] {
+	return Map[K, V](m)
 }

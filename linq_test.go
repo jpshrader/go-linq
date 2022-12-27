@@ -3,8 +3,8 @@ package golinq
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/jpshrader/go-linq/errors"
+	"github.com/stretchr/testify/assert"
 )
 
 // ANY

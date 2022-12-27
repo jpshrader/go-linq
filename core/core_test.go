@@ -15,7 +15,7 @@ func Test_AnyIntsReturnsTrue(t *testing.T) {
 		return x == 5
 	}
 
-	result := Any(isFive, numbers)
+	result := Any(numbers, isFive)
 
 	assert.True(t, result)
 }
@@ -27,7 +27,7 @@ func Test_AnyIntsReturnsFalse(t *testing.T) {
 		return x == -1
 	}
 
-	result := Any(isNegativeOne, numbers)
+	result := Any(numbers, isNegativeOne)
 
 	assert.False(t, result)
 }
@@ -40,7 +40,7 @@ func Test_AllIntsReturnsTrue(t *testing.T) {
 		return x%2 == 0
 	}
 
-	result := All(isEven, numbers)
+	result := All(numbers, isEven)
 
 	assert.True(t, result)
 }
@@ -52,7 +52,7 @@ func Test_AllIntsReturnsFalse(t *testing.T) {
 		return x%2 == 0
 	}
 
-	result := All(isEven, numbers)
+	result := All(numbers, isEven)
 
 	assert.False(t, result)
 }
@@ -65,7 +65,7 @@ func Test_WhereIntsReturnsEven(t *testing.T) {
 		return x%2 == 0
 	}
 
-	result := Where(isEven, numbers)
+	result := Where(numbers, isEven)
 
 	assert.Equal(t, result, []int{0, 2, 4, 6, 8})
 }
@@ -77,7 +77,7 @@ func Test_WhereIntsReturnsOdd(t *testing.T) {
 		return x%2 == 1
 	}
 
-	result := Where(isOdd, numbers)
+	result := Where(numbers, isOdd)
 
 	assert.Equal(t, result, []int{1, 3, 5, 7, 9})
 }
@@ -90,7 +90,7 @@ func Test_FirstIntsReturnsEven(t *testing.T) {
 		return x%2 == 0
 	}
 
-	result, err := First(isEven, -1, numbers)
+	result, err := First(numbers, isEven, -1)
 
 	assert.Nil(t, err)
 	assert.Equal(t, result, 0)
@@ -103,7 +103,7 @@ func Test_FirstIntsReturnsNotFound(t *testing.T) {
 		return x%2 == 1
 	}
 
-	result, err := First(isOdd, -1, numbers)
+	result, err := First(numbers, isOdd, -1)
 
 	assert.NotNil(t, err)
 	assert.Equal(t, err, errors.NotFoundError{})
