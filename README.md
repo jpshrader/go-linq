@@ -28,6 +28,11 @@ func main() {
 }
 ```
 
+## Helpful Info
+
+1. https://go.dev/blog/intro-generics
+2. https://gosamples.dev/generics-cheatsheet/
+
 ## Setup
 
 This project utilises Visual Studio Dev Containers to manage dependencies. For more information on VS Code Development Containers, see the following:

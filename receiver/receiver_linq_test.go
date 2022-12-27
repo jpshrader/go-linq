@@ -1,4 +1,4 @@
-package golinq
+package receiver
 
 import (
 	"testing"
