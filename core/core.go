@@ -4,16 +4,18 @@ import (
 	"sort"
 
 	"github.com/jpshrader/go-linq/errors"
+
+	"golang.org/x/exp/constraints"
 )
 
 type Matcher[T any] func(x T) bool
 
-type Transform[T, R any] func(x T) R
+type Transformer[T, R any] func(x T) R
 
-type Compare[T any] func(x, y int) bool
+type Comparer[T any] func(x, y int) bool
 
 type Number interface {
-	int | int8 | int16 | int32 | int64 | uint | uint8 | uint16 | uint32 | uint64 | float32 | float64
+	constraints.Integer | constraints.Float
 }
 
 func Any[T any](src []T, isMatch Matcher[T]) bool {
@@ -83,7 +85,7 @@ func Skip[T any](src []T, count int) (ret []T) {
 	return
 }
 
-func Select[T, R any](src []T, transformer Transform[T, R]) (ret []R) {
+func Select[T, R any](src []T, transformer Transformer[T, R]) (ret []R) {
 	for _, item := range src {
 		ret = append(ret, transformer(item))
 	}
@@ -101,7 +103,7 @@ func Distinct[T comparable](src []T) (ret []T) {
 	return
 }
 
-func DistinctStruct[T any, R comparable](src []T, transformer Transform[T, R]) (ret []T) {
+func DistinctStruct[T any, R comparable](src []T, transformer Transformer[T, R]) (ret []T) {
 	existingItems := make(map[R]bool)
 	for _, item := range src {
 		itemId := transformer(item)
@@ -113,7 +115,23 @@ func DistinctStruct[T any, R comparable](src []T, transformer Transform[T, R]) (
 	return
 }
 
-func OrderBy[T any](src []T, comparer Compare[T]) []T {
+func OrderBy[T any](src []T, comparer Comparer[T]) []T {
+	sort.Slice(src, comparer)
+	return src
+}
+
+func OrderByAscending[T constraints.Ordered](src []T) []T {
+	comparer := func(i, j int) bool {
+		return src[i] < src[j]
+	}
+	sort.Slice(src, comparer)
+	return src
+}
+
+func OrderByDescending[T constraints.Ordered](src []T) []T {
+	comparer := func(i, j int) bool {
+		return src[i] > src[j]
+	}
 	sort.Slice(src, comparer)
 	return src
 }

@@ -340,6 +340,24 @@ func Test_OrderByIntsReturnsAscending(t *testing.T) {
 	assert.Equal(t, Slice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, result)
 }
 
+// ORDER BY ASCENDING
+func Test_OrderByAscendingIntsReturns(t *testing.T) {
+	numbers := OrderedSlice[int]{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
+
+	result := numbers.OrderByAscending()
+
+	assert.Equal(t, OrderedSlice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, result)
+}
+
+// ORDER BY DESCENDING
+func Test_OrderByDescendingIntsReturns(t *testing.T) {
+	numbers := OrderedSlice[int]{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
+
+	result := numbers.OrderByDescending()
+
+	assert.Equal(t, OrderedSlice[int]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, result)
+}
+
 func Test_OrderByIntsReturnsDescending(t *testing.T) {
 	numbers := Slice[int]{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
 

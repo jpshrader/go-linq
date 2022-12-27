@@ -2,9 +2,12 @@ package golinq
 
 import (
 	"github.com/jpshrader/go-linq/core"
+	"golang.org/x/exp/constraints"
 )
 
 type Slice[T any] []T
+
+type OrderedSlice[T constraints.Ordered] []T
 
 type NumericSlice[T core.Number] []T
 
@@ -62,7 +65,7 @@ func (slice Slice[T]) Skip(count int) Slice[T] {
 	return core.Skip(slice, count)
 }
 
-func (slice TransformableSlice[T, R]) Select(transformer core.Transform[T, R]) Slice[R] {
+func (slice TransformableSlice[T, R]) Select(transformer core.Transformer[T, R]) Slice[R] {
 	return core.Select(slice, transformer)
 }
 
@@ -70,12 +73,20 @@ func (slice ComparableSlice[T]) Distinct() Slice[T] {
 	return core.Distinct(slice)
 }
 
-func (slice ComparableTransformableSlice[T, R]) DistinctStruct(transformer core.Transform[T, R]) Slice[T] {
+func (slice ComparableTransformableSlice[T, R]) DistinctStruct(transformer core.Transformer[T, R]) Slice[T] {
 	return core.DistinctStruct(slice, transformer)
 }
 
-func (slice Slice[T]) OrderBy(comparer core.Compare[T]) Slice[T] {
+func (slice Slice[T]) OrderBy(comparer core.Comparer[T]) Slice[T] {
 	return core.OrderBy(slice, comparer)
+}
+
+func (slice OrderedSlice[T]) OrderByAscending() OrderedSlice[T] {
+	return core.OrderByAscending(slice)
+}
+
+func (slice OrderedSlice[T]) OrderByDescending() OrderedSlice[T] {
+	return core.OrderByDescending(slice)
 }
 
 func (slice NumericSlice[T]) Sum() T {
