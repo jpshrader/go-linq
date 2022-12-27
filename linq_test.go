@@ -7,6 +7,47 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// AS X SLICE
+func Test_AsSlice(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4}
+
+	result := AsSlice(numbers)
+
+	assert.Equal(t, Slice[int]{0, 1, 2, 3, 4}, result)
+}
+
+func Test_AsNumericSlice(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4}
+
+	result := AsNumericSlice(numbers)
+
+	assert.Equal(t, NumericSlice[int]{0, 1, 2, 3, 4}, result)
+}
+
+func Test_AsComparableSlice(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4}
+
+	result := AsComparableSlice(numbers)
+
+	assert.Equal(t, ComparableSlice[int]{0, 1, 2, 3, 4}, result)
+}
+
+func Test_AsTransformableSlice(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4}
+
+	result := AsTransformableSlice[int, int](numbers)
+
+	assert.Equal(t, TransformableSlice[int, int]{0, 1, 2, 3, 4}, result)
+}
+
+func Test_AsComparableTransformableSlice(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4}
+
+	result := AsComparableTransformableSlice[int, int](numbers)
+
+	assert.Equal(t, ComparableTransformableSlice[int, int]{0, 1, 2, 3, 4}, result)
+}
+
 // ANY
 func Test_AnyIntsReturnsTrue(t *testing.T) {
 	numbers := Slice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
