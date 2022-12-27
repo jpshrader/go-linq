@@ -65,16 +65,20 @@ func Take[T any](src []T, count int) (ret []T) {
 	for i, item := range src {
 		if i < count {
 			ret = append(ret, item)
+		} else {
+			return
 		}
 	}
 	return
 }
 
 func Skip[T any](src []T, count int) (ret []T) {
-	for i, item := range src {
-		if i > count {
-			ret = append(ret, item)
-		}
+	if count > len(src) {
+		return
+	}
+
+	for i := count; i < len(src); i++ {
+		ret = append(ret, src[i])
 	}
 	return
 }
@@ -86,11 +90,22 @@ func Select[T, R any](src []T, transformer Transform[T, R]) (ret []R) {
 	return
 }
 
-func Distinct[T any, R comparable](src []T, transformer Transform[T, R]) (ret []T) {
+func Distinct[T comparable](src []T) (ret []T) {
+	existingItems := make(map[T]bool, 0)
+	for _, item := range src {
+		if !existingItems[item] {
+			ret = append(ret, item)
+			existingItems[item] = true
+		}
+	}
+	return
+}
+
+func DistinctStruct[T any, R comparable](src []T, transformer Transform[T, R]) (ret []T) {
 	existingItems := make(map[R]bool)
 	for _, item := range src {
 		itemId := transformer(item)
-		if existingItems[itemId] {
+		if !existingItems[itemId] {
 			ret = append(ret, item)
 			existingItems[itemId] = true
 		}
@@ -110,10 +125,10 @@ func Sum[T Number](src []T) (ret T) {
 	return
 }
 
-func Average[T Number](src []T) T {
+func Average[T Number](src []T) float64 {
 	length := len(src)
 	if length > 0 {
-		return Sum(src) / T(length)
+		return float64(Sum(src)) / float64(length)
 	}
 	return 0
 }
