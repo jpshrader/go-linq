@@ -74,7 +74,7 @@ func (slice ComparableSlice[T]) Distinct() Slice[T] {
 }
 
 func (slice ComparableTransformableSlice[T, R]) DistinctStruct(transformer core.Transformer[T, R]) Slice[T] {
-	return core.DistinctStruct(slice, transformer)
+	return core.DistinctC(slice, transformer)
 }
 
 func (slice Slice[T]) OrderBy(comparer core.Comparer[T]) Slice[T] {

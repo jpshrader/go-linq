@@ -63,6 +63,22 @@ func First[T any](src []T, isMatch Matcher[T], defaultVal T) (T, error) {
 	return defaultVal, errors.NotFoundError{}
 }
 
+func Last[T any](src []T, isMatch Matcher[T], defaultVal T) (T, error) {
+	var last T
+	found := false
+	for _, item := range src {
+		if isMatch(item) {
+			last = item
+			found = true
+		}
+	}
+	
+	if found {
+		return last, nil
+	}
+	return defaultVal, errors.NotFoundError{}
+}
+
 func Take[T any](src []T, count int) (ret []T) {
 	for i, item := range src {
 		if i < count {
@@ -103,7 +119,7 @@ func Distinct[T comparable](src []T) (ret []T) {
 	return
 }
 
-func DistinctStruct[T any, R comparable](src []T, transformer Transformer[T, R]) (ret []T) {
+func DistinctC[T any, R comparable](src []T, transformer Transformer[T, R]) (ret []T) {
 	existingItems := make(map[R]bool)
 	for _, item := range src {
 		itemId := transformer(item)
@@ -143,10 +159,25 @@ func Sum[T Number](src []T) (ret T) {
 	return
 }
 
+func SumC[T any, R Number](src []T, transformer Transformer[T, R]) (ret R) {
+	for _, item := range src {
+		ret += transformer(item)
+	}
+	return
+}
+
 func Average[T Number](src []T) float64 {
 	length := len(src)
 	if length > 0 {
 		return float64(Sum(src)) / float64(length)
+	}
+	return 0
+}
+
+func AverageC[T any, R Number](src []T, transformer Transformer[T, R]) float64 {
+	length := len(src)
+	if length > 0 {
+		return float64(SumC(src, transformer)) / float64(length)
 	}
 	return 0
 }
@@ -160,9 +191,27 @@ func Max[T Number](src []T) (ret T) {
 	return
 }
 
+func MaxC[T any, R constraints.Ordered](src []T, transformer Transformer[T, R]) (ret T) {
+	for _, item := range src {
+		if transformer(item) > transformer(ret) {
+			ret = item
+		}
+	}
+	return
+}
+
 func Min[T Number](src []T) (ret T) {
 	for _, item := range src {
 		if item < ret {
+			ret = item
+		}
+	}
+	return
+}
+
+func MinC[T any, R constraints.Ordered](src []T, transformer Transformer[T, R]) (ret T) {
+	for _, item := range src {
+		if transformer(item) < transformer(ret) {
 			ret = item
 		}
 	}

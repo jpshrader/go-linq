@@ -135,6 +135,34 @@ func Test_FirstIntsReturnsNotFound(t *testing.T) {
 	assert.Equal(t, -1, result)
 }
 
+// LAST
+func Test_LastIntsReturnsEven(t *testing.T) {
+	numbers := []int{0, 2}
+
+	isEven := func(x int) bool {
+		return x%2 == 0
+	}
+
+	result, err := Last(numbers, isEven, -1)
+
+	assert.Nil(t, err)
+	assert.Equal(t, 2, result)
+}
+
+func Test_LastIntsReturnsNotFound(t *testing.T) {
+	numbers := []int{0, 2}
+
+	isOdd := func(x int) bool {
+		return x%2 == 1
+	}
+
+	result, err := Last(numbers, isOdd, -1)
+
+	assert.NotNil(t, err)
+	assert.Equal(t, err, errors.NotFoundError{})
+	assert.Equal(t, -1, result)
+}
+
 // TAKE
 func Test_TakeIntsReturnsFirst5(t *testing.T) {
 	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
@@ -241,7 +269,7 @@ func Test_DistinctStructIntsReturns(t *testing.T) {
 		return x
 	}
 
-	result := DistinctStruct(numbers, transform)
+	result := DistinctC(numbers, transform)
 
 	assert.Equal(t, []int{0, 1, 2, 3, 4, 5}, result)
 }
@@ -253,7 +281,7 @@ func Test_DistinctStructIntsReturnsNil(t *testing.T) {
 		return x
 	}
 
-	result := DistinctStruct(numbers, transform)
+	result := DistinctC(numbers, transform)
 
 	var expected []int
 	assert.Equal(t, expected, result)
@@ -272,7 +300,7 @@ func Test_DistinctStructReturns(t *testing.T) {
 
 	persons := []person{p1, p2, p1, p2, p3}
 
-	result := DistinctStruct(persons, personTransformer)
+	result := DistinctC(persons, personTransformer)
 
 	assert.Equal(t, []person{p1, p2, p3}, result)
 }
@@ -280,7 +308,7 @@ func Test_DistinctStructReturns(t *testing.T) {
 func Test_DistinctStructReturnsNil(t *testing.T) {
 	persons := []person{}
 
-	result := DistinctStruct(persons, personTransformer)
+	result := DistinctC(persons, personTransformer)
 
 	var expected []person
 	assert.Equal(t, expected, result)
@@ -330,6 +358,10 @@ func Test_OrderByDescendingIntsReturns(t *testing.T) {
 }
 
 // MAX
+func getNum(x int) int {
+	return x
+}
+
 func Test_MaxIntsReturns(t *testing.T) {
 	numbers := []int{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
 
@@ -339,6 +371,22 @@ func Test_MaxIntsReturns(t *testing.T) {
 }
 
 func Test_MaxIntsReturnsNil(t *testing.T) {
+	numbers := []int{}
+
+	result := MaxC(numbers, getNum)
+
+	assert.Equal(t, 0, result)
+}
+
+func Test_MaxCIntsReturns(t *testing.T) {
+	numbers := []int{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
+
+	result := MaxC(numbers, getNum)
+
+	assert.Equal(t, 9, result)
+}
+
+func Test_MaxCIntsReturnsNil(t *testing.T) {
 	numbers := []int{}
 
 	result := Max(numbers)
@@ -371,6 +419,30 @@ func Test_MinIntsReturnsNil(t *testing.T) {
 	assert.Equal(t, 0, result)
 }
 
+func Test_MinCIntsReturns(t *testing.T) {
+	numbers := []int{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
+
+	result := MinC(numbers, getNum)
+
+	assert.Equal(t, 0, result)
+}
+
+func Test_MinCIntsReturnsLast(t *testing.T) {
+	numbers := []int{3, 7, 6, 9, 8, 0, 4, 2, 1, 5, -1}
+
+	result := MinC(numbers, getNum)
+
+	assert.Equal(t, -1, result)
+}
+
+func Test_MinCIntsReturnsNil(t *testing.T) {
+	numbers := []int{}
+
+	result := MinC(numbers, getNum)
+
+	assert.Equal(t, 0, result)
+}
+
 // SUM
 func Test_SumIntsReturns(t *testing.T) {
 	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
@@ -388,6 +460,22 @@ func Test_SumIntsReturnsNil(t *testing.T) {
 	assert.Equal(t, 0, result)
 }
 
+func Test_SumCIntsReturns(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+	result := SumC(numbers, getNum)
+
+	assert.Equal(t, 45, result)
+}
+
+func Test_SumCIntsReturnsNil(t *testing.T) {
+	numbers := []int{}
+
+	result := SumC(numbers, getNum)
+
+	assert.Equal(t, 0, result)
+}
+
 // AVERAGE
 func Test_AverageIntsReturns(t *testing.T) {
 	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
@@ -401,6 +489,22 @@ func Test_AverageIntsReturnsNil(t *testing.T) {
 	numbers := []int{}
 
 	result := Average(numbers)
+
+	assert.Equal(t, float64(0), result)
+}
+
+func Test_AverageCIntsReturns(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+	result := AverageC(numbers, getNum)
+
+	assert.Equal(t, 4.5, result)
+}
+
+func Test_AverageCIntsReturnsNil(t *testing.T) {
+	numbers := []int{}
+
+	result := AverageC(numbers, getNum)
 
 	assert.Equal(t, float64(0), result)
 }
