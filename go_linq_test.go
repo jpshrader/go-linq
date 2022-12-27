@@ -115,7 +115,7 @@ func Test_FirstIntsReturnsEven(t *testing.T) {
 		return x%2 == 0
 	}
 
-	result, err := First(numbers, isEven, -1)
+	result, err := First(numbers, isEven)
 
 	assert.Nil(t, err)
 	assert.Equal(t, 0, result)
@@ -128,11 +128,11 @@ func Test_FirstIntsReturnsNotFound(t *testing.T) {
 		return x%2 == 1
 	}
 
-	result, err := First(numbers, isOdd, -1)
+	result, err := First(numbers, isOdd)
 
 	assert.NotNil(t, err)
 	assert.Equal(t, err, errors.NotFoundError{})
-	assert.Equal(t, -1, result)
+	assert.Equal(t, 0, result)
 }
 
 // LAST
@@ -143,7 +143,7 @@ func Test_LastIntsReturnsEven(t *testing.T) {
 		return x%2 == 0
 	}
 
-	result, err := Last(numbers, isEven, -1)
+	result, err := Last(numbers, isEven)
 
 	assert.Nil(t, err)
 	assert.Equal(t, 2, result)
@@ -156,11 +156,11 @@ func Test_LastIntsReturnsNotFound(t *testing.T) {
 		return x%2 == 1
 	}
 
-	result, err := Last(numbers, isOdd, -1)
+	result, err := Last(numbers, isOdd)
 
 	assert.NotNil(t, err)
 	assert.Equal(t, err, errors.NotFoundError{})
-	assert.Equal(t, -1, result)
+	assert.Equal(t, 0, result)
 }
 
 // TAKE

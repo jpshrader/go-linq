@@ -53,8 +53,12 @@ func (slice Slice[T]) Except(filter golinq.Matcher[T]) Slice[T] {
 	return golinq.Except(slice, filter)
 }
 
-func (slice Slice[T]) First(filter golinq.Matcher[T], defaultVal T) (T, error) {
-	return golinq.First(slice, filter, defaultVal)
+func (slice Slice[T]) First(filter golinq.Matcher[T]) (T, error) {
+	return golinq.First(slice, filter)
+}
+
+func (slice Slice[T]) Last(filter golinq.Matcher[T]) (T, error) {
+	return golinq.Last(slice, filter)
 }
 
 func (slice Slice[T]) Take(count int) Slice[T] {

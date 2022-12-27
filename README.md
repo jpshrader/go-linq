@@ -1,5 +1,7 @@
 # Linq with Go
 
+An attempt to recreate the ease and usefulness of the [linq dotnet library](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable?view=net-7.0) in golang.
+
 ## Usage
 
 ```
@@ -10,18 +12,18 @@ import (
 )
 
 func isEven(x int) bool {
-    return x % 2 == 0
+    return x%2 == 0
 }
 
 func isOdd(x int) bool {
-    return !isEven(x)
+    return x%2 == 1
 }
 
 func main() {
     numbers := golinq.AsSlice([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
 
-    evenNumbers := numbers.Where(isEven)
-    oddNumbers := numbers.Where(isOdd)
+    evenNumbers := Where(numbers, isEven)
+    oddNumbers := Where(numbers, isOdd)
 
     fmt.Printf("even numbers: %v", evenNumbers)
     fmt.Printf("odd numbers:  %v", oddNumbers)

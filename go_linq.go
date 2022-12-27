@@ -54,16 +54,16 @@ func Except[T any](src []T, isMatch Matcher[T]) (ret []T) {
 	return
 }
 
-func First[T any](src []T, isMatch Matcher[T], defaultVal T) (T, error) {
+func First[T any](src []T, isMatch Matcher[T]) (T, error) {
 	for _, item := range src {
 		if isMatch(item) {
 			return item, nil
 		}
 	}
-	return defaultVal, errors.NotFoundError{}
+	return *new(T), errors.NotFoundError{}
 }
 
-func Last[T any](src []T, isMatch Matcher[T], defaultVal T) (T, error) {
+func Last[T any](src []T, isMatch Matcher[T]) (T, error) {
 	var last T
 	found := false
 	for _, item := range src {
@@ -76,7 +76,7 @@ func Last[T any](src []T, isMatch Matcher[T], defaultVal T) (T, error) {
 	if found {
 		return last, nil
 	}
-	return defaultVal, errors.NotFoundError{}
+	return *new(T), errors.NotFoundError{}
 }
 
 func Take[T any](src []T, count int) (ret []T) {
