@@ -1,7 +1,7 @@
 package receiver
 
 import (
-	"github.com/jpshrader/go-linq"
+	golinq "github.com/jpshrader/go-linq"
 	"golang.org/x/exp/constraints"
 )
 
@@ -37,27 +37,27 @@ func AsComparableTransformableSlice[T any, R comparable](slice []T) ComparableTr
 	return ComparableTransformableSlice[T, R](slice)
 }
 
-func (slice Slice[T]) Any(filter golinq.Matcher[T]) bool {
+func (slice Slice[T]) Any(filter golinq.Predicate[T]) bool {
 	return golinq.Any(slice, filter)
 }
 
-func (slice Slice[T]) All(filter golinq.Matcher[T]) bool {
+func (slice Slice[T]) All(filter golinq.Predicate[T]) bool {
 	return golinq.All(slice, filter)
 }
 
-func (slice Slice[T]) Where(filter golinq.Matcher[T]) Slice[T] {
+func (slice Slice[T]) Where(filter golinq.Predicate[T]) Slice[T] {
 	return golinq.Where(slice, filter)
 }
 
-func (slice Slice[T]) Except(filter golinq.Matcher[T]) Slice[T] {
+func (slice Slice[T]) Except(filter golinq.Predicate[T]) Slice[T] {
 	return golinq.Except(slice, filter)
 }
 
-func (slice Slice[T]) First(filter golinq.Matcher[T]) (T, error) {
+func (slice Slice[T]) First(filter golinq.Predicate[T]) (T, error) {
 	return golinq.First(slice, filter)
 }
 
-func (slice Slice[T]) Last(filter golinq.Matcher[T]) (T, error) {
+func (slice Slice[T]) Last(filter golinq.Predicate[T]) (T, error) {
 	return golinq.Last(slice, filter)
 }
 
@@ -69,7 +69,7 @@ func (slice Slice[T]) Skip(count int) Slice[T] {
 	return golinq.Skip(slice, count)
 }
 
-func (slice TransformableSlice[T, R]) Select(transformer golinq.Transformer[T, R]) Slice[R] {
+func (slice TransformableSlice[T, R]) Select(transformer golinq.Mapper[T, R]) Slice[R] {
 	return golinq.Select(slice, transformer)
 }
 
@@ -77,7 +77,7 @@ func (slice ComparableSlice[T]) Distinct() Slice[T] {
 	return golinq.Distinct(slice)
 }
 
-func (slice ComparableTransformableSlice[T, R]) DistinctStruct(transformer golinq.Transformer[T, R]) Slice[T] {
+func (slice ComparableTransformableSlice[T, R]) DistinctStruct(transformer golinq.Mapper[T, R]) Slice[T] {
 	return golinq.DistinctC(slice, transformer)
 }
 

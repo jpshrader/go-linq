@@ -3,22 +3,10 @@ package golinq
 import (
 	"sort"
 
-	"github.com/jpshrader/go-linq/errors"
-
 	"golang.org/x/exp/constraints"
 )
 
-type Matcher[T any] func(x T) bool
-
-type Transformer[T, R any] func(x T) R
-
-type Comparer[T any] func(x, y int) bool
-
-type Number interface {
-	constraints.Integer | constraints.Float
-}
-
-func Any[T any](src []T, isMatch Matcher[T]) bool {
+func Any[T any](src []T, isMatch Predicate[T]) bool {
 	for _, item := range src {
 		if isMatch(item) {
 			return true
@@ -27,7 +15,7 @@ func Any[T any](src []T, isMatch Matcher[T]) bool {
 	return false
 }
 
-func All[T any](src []T, isMatch Matcher[T]) bool {
+func All[T any](src []T, isMatch Predicate[T]) bool {
 	for _, item := range src {
 		if !isMatch(item) {
 			return false
@@ -36,7 +24,7 @@ func All[T any](src []T, isMatch Matcher[T]) bool {
 	return true
 }
 
-func Where[T any](src []T, isMatch Matcher[T]) (ret []T) {
+func Where[T any](src []T, isMatch Predicate[T]) (ret []T) {
 	for _, item := range src {
 		if isMatch(item) {
 			ret = append(ret, item)
@@ -45,7 +33,7 @@ func Where[T any](src []T, isMatch Matcher[T]) (ret []T) {
 	return
 }
 
-func Except[T any](src []T, isMatch Matcher[T]) (ret []T) {
+func Except[T any](src []T, isMatch Predicate[T]) (ret []T) {
 	for _, item := range src {
 		if !isMatch(item) {
 			ret = append(ret, item)
@@ -54,16 +42,16 @@ func Except[T any](src []T, isMatch Matcher[T]) (ret []T) {
 	return
 }
 
-func First[T any](src []T, isMatch Matcher[T]) (T, error) {
+func First[T any](src []T, isMatch Predicate[T]) (T, error) {
 	for _, item := range src {
 		if isMatch(item) {
 			return item, nil
 		}
 	}
-	return *new(T), errors.NotFoundError{}
+	return *new(T), NotFoundError{}
 }
 
-func Last[T any](src []T, isMatch Matcher[T]) (T, error) {
+func Last[T any](src []T, isMatch Predicate[T]) (T, error) {
 	var last T
 	found := false
 	for _, item := range src {
@@ -72,11 +60,11 @@ func Last[T any](src []T, isMatch Matcher[T]) (T, error) {
 			found = true
 		}
 	}
-	
+
 	if found {
 		return last, nil
 	}
-	return *new(T), errors.NotFoundError{}
+	return *new(T), NotFoundError{}
 }
 
 func Take[T any](src []T, count int) (ret []T) {
@@ -101,9 +89,9 @@ func Skip[T any](src []T, count int) (ret []T) {
 	return
 }
 
-func Select[T, R any](src []T, transformer Transformer[T, R]) (ret []R) {
+func Select[T, R any](src []T, mapper Mapper[T, R]) (ret []R) {
 	for _, item := range src {
-		ret = append(ret, transformer(item))
+		ret = append(ret, mapper(item))
 	}
 	return
 }
@@ -119,10 +107,10 @@ func Distinct[T comparable](src []T) (ret []T) {
 	return
 }
 
-func DistinctC[T any, R comparable](src []T, transformer Transformer[T, R]) (ret []T) {
+func DistinctC[T any, R comparable](src []T, mapper Mapper[T, R]) (ret []T) {
 	existingItems := make(map[R]bool)
 	for _, item := range src {
-		itemId := transformer(item)
+		itemId := mapper(item)
 		if !existingItems[itemId] {
 			ret = append(ret, item)
 			existingItems[itemId] = true
@@ -159,9 +147,9 @@ func Sum[T Number](src []T) (ret T) {
 	return
 }
 
-func SumC[T any, R Number](src []T, transformer Transformer[T, R]) (ret R) {
+func SumC[T any, R Number](src []T, mapper Mapper[T, R]) (ret R) {
 	for _, item := range src {
-		ret += transformer(item)
+		ret += mapper(item)
 	}
 	return
 }
@@ -174,10 +162,10 @@ func Average[T Number](src []T) float64 {
 	return 0
 }
 
-func AverageC[T any, R Number](src []T, transformer Transformer[T, R]) float64 {
+func AverageC[T any, R Number](src []T, mapper Mapper[T, R]) float64 {
 	length := len(src)
 	if length > 0 {
-		return float64(SumC(src, transformer)) / float64(length)
+		return float64(SumC(src, mapper)) / float64(length)
 	}
 	return 0
 }
@@ -191,9 +179,9 @@ func Max[T Number](src []T) (ret T) {
 	return
 }
 
-func MaxC[T any, R constraints.Ordered](src []T, transformer Transformer[T, R]) (ret T) {
+func MaxC[T any, R constraints.Ordered](src []T, mapper Mapper[T, R]) (ret T) {
 	for _, item := range src {
-		if transformer(item) > transformer(ret) {
+		if mapper(item) > mapper(ret) {
 			ret = item
 		}
 	}
@@ -209,9 +197,9 @@ func Min[T Number](src []T) (ret T) {
 	return
 }
 
-func MinC[T any, R constraints.Ordered](src []T, transformer Transformer[T, R]) (ret T) {
+func MinC[T any, R constraints.Ordered](src []T, mapper Mapper[T, R]) (ret T) {
 	for _, item := range src {
-		if transformer(item) < transformer(ret) {
+		if mapper(item) < mapper(ret) {
 			ret = item
 		}
 	}

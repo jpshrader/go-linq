@@ -3,6 +3,7 @@ package receiver
 import (
 	"testing"
 
+	golinq "github.com/jpshrader/go-linq"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -12,10 +13,12 @@ func Test_Slice(t *testing.T) {
 		return x%2 == 0
 	}
 
-	result := AsSlice(numbers).
+	result, err := AsSlice(numbers).
 		Skip(5).
 		Take(5).
-		Where(isEven)
+		Where(isEven).
+		First(golinq.EmptyPredicate[int])
 
-	assert.Equal(t, Slice[int]{6, 8}, result)
+	assert.Nil(t, err)
+	assert.Equal(t, 6, result)
 }

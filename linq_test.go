@@ -3,7 +3,6 @@ package golinq
 import (
 	"testing"
 
-	"github.com/jpshrader/go-linq/errors"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -131,7 +130,16 @@ func Test_FirstIntsReturnsNotFound(t *testing.T) {
 	result, err := First(numbers, isOdd)
 
 	assert.NotNil(t, err)
-	assert.Equal(t, err, errors.NotFoundError{})
+	assert.Equal(t, err, NotFoundError{})
+	assert.Equal(t, 0, result)
+}
+
+func Test_FirstIntsReturns(t *testing.T) {
+	numbers := []int{0, 2}
+
+	result, err := First(numbers, EmptyPredicate[int])
+
+	assert.Nil(t, err)
 	assert.Equal(t, 0, result)
 }
 
@@ -159,7 +167,8 @@ func Test_LastIntsReturnsNotFound(t *testing.T) {
 	result, err := Last(numbers, isOdd)
 
 	assert.NotNil(t, err)
-	assert.Equal(t, err, errors.NotFoundError{})
+	assert.Equal(t, err, NotFoundError{})
+	assert.Equal(t, err.Error(), "no matching element(s) found")
 	assert.Equal(t, 0, result)
 }
 
