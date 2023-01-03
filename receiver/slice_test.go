@@ -24,6 +24,14 @@ func Test_AsNumericSlice(t *testing.T) {
 	assert.Equal(t, NumericSlice[int]{0, 1, 2, 3, 4}, result)
 }
 
+func Test_AsOrderedSlice(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4}
+
+	result := AsOrderedSlice(numbers)
+
+	assert.Equal(t, OrderedSlice[int]{0, 1, 2, 3, 4}, result)
+}
+
 // ANY
 func Test_AnyIntsReturnsTrue(t *testing.T) {
 	numbers := Slice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
