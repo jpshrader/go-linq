@@ -17,7 +17,7 @@ func Test_Slice(t *testing.T) {
 		Skip(5).
 		Take(5).
 		Where(isEven).
-		First(golinq.EmptyPredicate[int])
+		First(golinq.NilPredicate[int])
 
 	assert.Nil(t, err)
 	assert.Equal(t, 6, result)

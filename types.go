@@ -10,7 +10,7 @@ type Number interface {
 // FUNCTIONS
 type Predicate[T any] func(x T) bool
 
-func EmptyPredicate[T any](x T) bool {
+func NilPredicate[T any](x T) bool {
 	return true
 }
 
