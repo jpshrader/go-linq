@@ -24,6 +24,23 @@ func All[T any](src []T, isMatch Predicate[T]) bool {
 	return true
 }
 
+func IsEmpty[T any](src []T) bool {
+	return len(src) == 0
+}
+
+func Count[T any](src []T) int {
+	return len(src)
+}
+
+func Contains[T any](src []T, isEqual Comparer[T], item T) bool {
+	for _, element := range src {
+		if isEqual(item, element) {
+			return true
+		}
+	}
+	return false
+}
+
 func Where[T any](src []T, isMatch Predicate[T]) (ret []T) {
 	for _, item := range src {
 		if isMatch(item) {
@@ -119,7 +136,7 @@ func DistinctC[T any, R comparable](src []T, mapper Mapper[T, R]) (ret []T) {
 	return
 }
 
-func OrderBy[T any](src []T, comparer Comparer[T]) []T {
+func OrderBy[T any](src []T, comparer IndexComparer[T]) []T {
 	sort.Slice(src, comparer)
 	return src
 }

@@ -66,6 +66,73 @@ func Test_OrderedAllIntsReturnsFalse(t *testing.T) {
 	assert.False(t, result)
 }
 
+// ISEMPTY
+func Test_OrderedSliceIsEmptyIntsReturn(t *testing.T) {
+	numbers := OrderedSlice[int]{0, 2}
+
+	result := numbers.IsEmpty()
+
+	assert.False(t, result)
+}
+
+func Test_OrderedSliceIsEmptyEmptyIntsReturns(t *testing.T) {
+	numbers := OrderedSlice[int]{}
+
+	result := numbers.IsEmpty()
+
+	assert.True(t, result)
+}
+
+func Test_OrderedSliceIsEmptyNilIntsReturns(t *testing.T) {
+	var numbers OrderedSlice[int]
+
+	result := numbers.IsEmpty()
+
+	assert.True(t, result)
+}
+
+// COUNT
+func Test_OrderedSliceCountIntsReturn(t *testing.T) {
+	numbers := OrderedSlice[int]{0, 2}
+
+	result := numbers.Count()
+
+	assert.Equal(t, 2, result)
+}
+
+func Test_OrderedSliceCountEmptyIntsReturns(t *testing.T) {
+	numbers := OrderedSlice[int]{}
+
+	result := numbers.Count()
+
+	assert.Equal(t, 0, result)
+}
+
+func Test_OrderedSliceCountNilIntsReturns(t *testing.T) {
+	var numbers OrderedSlice[int]
+
+	result := numbers.Count()
+
+	assert.Equal(t, 0, result)
+}
+
+// CONTAINS
+func Test_OrderedSliceContainsIntsReturnsTrue(t *testing.T) {
+	numbers := OrderedSlice[int]{0, 2}
+
+	result := numbers.Contains(0)
+
+	assert.True(t, result)
+}
+
+func Test_OrderedSliceContainsIntsReturnFalse(t *testing.T) {
+	numbers := OrderedSlice[int]{0, 2}
+
+	result := numbers.Contains(-1)
+
+	assert.False(t, result)
+}
+
 // WHERE
 func Test_OrderedWhereIntsReturnsEven(t *testing.T) {
 	numbers := OrderedSlice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}

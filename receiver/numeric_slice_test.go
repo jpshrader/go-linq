@@ -66,6 +66,73 @@ func Test_NumericAllIntsReturnsFalse(t *testing.T) {
 	assert.False(t, result)
 }
 
+// ISEMPTY
+func Test_NumericSliceIsEmptyIntsReturn(t *testing.T) {
+	numbers := NumericSlice[int]{0, 2}
+
+	result := numbers.IsEmpty()
+
+	assert.False(t, result)
+}
+
+func Test_NumericSliceIsEmptyEmptyIntsReturns(t *testing.T) {
+	numbers := NumericSlice[int]{}
+
+	result := numbers.IsEmpty()
+
+	assert.True(t, result)
+}
+
+func Test_NumericSliceIsEmptyNilIntsReturns(t *testing.T) {
+	var numbers NumericSlice[int]
+
+	result := numbers.IsEmpty()
+
+	assert.True(t, result)
+}
+
+// COUNT
+func Test_NumericSliceCountIntsReturn(t *testing.T) {
+	numbers := NumericSlice[int]{0, 2}
+
+	result := numbers.Count()
+
+	assert.Equal(t, 2, result)
+}
+
+func Test_NumericSliceCountEmptyIntsReturns(t *testing.T) {
+	numbers := NumericSlice[int]{}
+
+	result := numbers.Count()
+
+	assert.Equal(t, 0, result)
+}
+
+func Test_NumericSliceCountNilIntsReturns(t *testing.T) {
+	var numbers NumericSlice[int]
+
+	result := numbers.Count()
+
+	assert.Equal(t, 0, result)
+}
+
+// CONTAINS
+func Test_NumericSliceContainsIntsReturnsTrue(t *testing.T) {
+	numbers := NumericSlice[int]{0, 2}
+
+	result := numbers.Contains(0)
+
+	assert.True(t, result)
+}
+
+func Test_NumericSliceContainsIntsReturnFalse(t *testing.T) {
+	numbers := NumericSlice[int]{0, 2}
+
+	result := numbers.Contains(-1)
+
+	assert.False(t, result)
+}
+
 // WHERE
 func Test_NumericWhereIntsReturnsEven(t *testing.T) {
 	numbers := NumericSlice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}

@@ -56,6 +56,81 @@ func Test_AllIntsReturnsFalse(t *testing.T) {
 	assert.False(t, result)
 }
 
+// ISEMPTY
+func Test_IsEmptyIntsReturn(t *testing.T) {
+	numbers := []int{0, 2}
+
+	result := IsEmpty(numbers)
+
+	assert.False(t, result)
+}
+
+func Test_IsEmptyEmptyIntsReturns(t *testing.T) {
+	numbers := []int{}
+
+	result := IsEmpty(numbers)
+
+	assert.True(t, result)
+}
+
+func Test_IsEmptyNilIntsReturns(t *testing.T) {
+	var numbers []int
+
+	result := IsEmpty(numbers)
+
+	assert.True(t, result)
+}
+
+// COUNT
+func Test_CountIntsReturn(t *testing.T) {
+	numbers := []int{0, 2}
+
+	result := Count(numbers)
+
+	assert.Equal(t, 2, result)
+}
+
+func Test_CountEmptyIntsReturns(t *testing.T) {
+	numbers := []int{}
+
+	result := Count(numbers)
+
+	assert.Equal(t, 0, result)
+}
+
+func Test_CountNilIntsReturns(t *testing.T) {
+	var numbers []int
+
+	result := Count(numbers)
+
+	assert.Equal(t, 0, result)
+}
+
+// CONTAINS
+func Test_ContainsIntsReturnsTrue(t *testing.T) {
+	numbers := []int{0, 2}
+
+	isEqual := func(x, y int) bool {
+		return x == y
+	}
+
+	result := Contains(numbers, isEqual, 0)
+
+	assert.True(t, result)
+}
+
+func Test_ContainsIntsReturnFalse(t *testing.T) {
+	numbers := []int{0, 2}
+
+	isEqual := func(x, y int) bool {
+		return x == y
+	}
+
+	result := Contains(numbers, isEqual, -1)
+
+	assert.False(t, result)
+}
+
 // WHERE
 func Test_WhereIntsReturnsEven(t *testing.T) {
 	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}

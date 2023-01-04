@@ -18,6 +18,18 @@ func (slice Slice[T]) All(filter golinq.Predicate[T]) bool {
 	return golinq.All(slice, filter)
 }
 
+func (slice Slice[T]) IsEmpty() bool {
+	return golinq.IsEmpty(slice)
+}
+
+func (slice Slice[T]) Count() int {
+	return golinq.Count(slice)
+}
+
+func (slice Slice[T]) Contains(isEqual golinq.Comparer[T], item T) bool {
+	return golinq.Contains(slice, isEqual, item)
+}
+
 func (slice Slice[T]) Where(filter golinq.Predicate[T]) Slice[T] {
 	return golinq.Where(slice, filter)
 }
@@ -42,6 +54,6 @@ func (slice Slice[T]) Skip(count int) Slice[T] {
 	return golinq.Skip(slice, count)
 }
 
-func (slice Slice[T]) OrderBy(comparer golinq.Comparer[T]) Slice[T] {
+func (slice Slice[T]) OrderBy(comparer golinq.IndexComparer[T]) Slice[T] {
 	return golinq.OrderBy(slice, comparer)
 }

@@ -16,7 +16,9 @@ func NilPredicate[T any](x T) bool {
 
 type Mapper[T, R any] func(x T) R
 
-type Comparer[T any] func(x, y int) bool
+type IndexComparer[T any] func(x, y int) bool
+
+type Comparer[T any] func(x, y T) bool
 
 // ERRORS
 type NotFoundError struct{}
