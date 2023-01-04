@@ -20,7 +20,7 @@ func isOdd(x int) bool {
 }
 
 func main() {
-    numbers := golinq.AsSlice([]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9})
+    numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 
     evenNumbers := Where(numbers, isEven)
     oddNumbers := Where(numbers, isOdd)
