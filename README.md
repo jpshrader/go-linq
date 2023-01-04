@@ -5,12 +5,6 @@ An attempt to recreate the ease and usefulness of the [linq dotnet library](http
 ## Usage
 
 ```
-import (
-    "fmt"
-
-    "github.com/jpshrader/go-linq"
-)
-
 func isEven(x int) bool {
     return x%2 == 0
 }
@@ -25,8 +19,10 @@ func main() {
     evenNumbers := Where(numbers, isEven)
     oddNumbers := Where(numbers, isOdd)
 
-    fmt.Printf("even numbers: %v", evenNumbers)
-    fmt.Printf("odd numbers:  %v", oddNumbers)
+    numberSlice := AsSlice(numbers)
+    
+    receiverEvenNums := numbers.Where(isEven)
+    receiverOddNums := numbers.Where(isOdd)
 }
 ```
 
