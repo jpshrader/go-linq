@@ -6,6 +6,10 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
+func Append[T any](src []T, items []T) []T {
+	return append(src, items...)
+}
+
 func Any[T any](src []T, isMatch Predicate[T]) bool {
 	for _, item := range src {
 		if isMatch(item) {

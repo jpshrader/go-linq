@@ -6,6 +6,34 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// APPEND
+func Test_AppendIntsReturns(t *testing.T) {
+	src := []int{1, 3, 5, 7, 9}
+	additional := []int{0, 2, 4, 6, 8}
+
+	result := Append(src, additional)
+
+	assert.Equal(t, []int{1, 3, 5, 7, 9, 0, 2, 4, 6, 8}, result)
+}
+
+func Test_AppendSrcEmptyIntsReturns(t *testing.T) {
+	src := []int{1, 3, 5, 7, 9}
+	var additional []int
+
+	result := Append(src, additional)
+
+	assert.Equal(t, []int{1, 3, 5, 7, 9}, result)
+}
+
+func Test_AppendAdditionalEmptyIntsReturns(t *testing.T) {
+	var src []int
+	additional := []int{0, 2, 4, 6, 8}
+
+	result := Append(src, additional)
+
+	assert.Equal(t, []int{0, 2, 4, 6, 8}, result)
+}
+
 // ANY
 func Test_AnyIntsReturnsTrue(t *testing.T) {
 	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}

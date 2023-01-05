@@ -16,6 +16,34 @@ func Test_AsOrderedSlice(t *testing.T) {
 	assert.Equal(t, OrderedSlice[int]{0, 1, 2, 3, 4}, result)
 }
 
+// APPEND
+func Test_OrderedSliceAppendIntsReturns(t *testing.T) {
+	src := OrderedSlice[int]{1, 3, 5, 7, 9}
+	additional := OrderedSlice[int]{0, 2, 4, 6, 8}
+
+	result := src.Append(additional)
+
+	assert.Equal(t, OrderedSlice[int]{1, 3, 5, 7, 9, 0, 2, 4, 6, 8}, result)
+}
+
+func Test_OrderedSliceAppendSrcEmptyIntsReturns(t *testing.T) {
+	src := OrderedSlice[int]{1, 3, 5, 7, 9}
+	var additional OrderedSlice[int]
+
+	result := src.Append(additional)
+
+	assert.Equal(t, OrderedSlice[int]{1, 3, 5, 7, 9}, result)
+}
+
+func Test_OrderedSliceAppendAdditionalEmptyIntsReturns(t *testing.T) {
+	var src OrderedSlice[int]
+	additional := OrderedSlice[int]{0, 2, 4, 6, 8}
+
+	result := src.Append(additional)
+
+	assert.Equal(t, OrderedSlice[int]{0, 2, 4, 6, 8}, result)
+}
+
 // ANY
 func Test_OrderedAnyIntsReturnsTrue(t *testing.T) {
 	numbers := OrderedSlice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}

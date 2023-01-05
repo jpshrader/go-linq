@@ -16,6 +16,34 @@ func Test_AsSlice(t *testing.T) {
 	assert.Equal(t, Slice[int]{0, 1, 2, 3, 4}, result)
 }
 
+// APPEND
+func Test_AppendIntsReturns(t *testing.T) {
+	src := Slice[int]{1, 3, 5, 7, 9}
+	additional := Slice[int]{0, 2, 4, 6, 8}
+
+	result := src.Append(additional)
+
+	assert.Equal(t, Slice[int]{1, 3, 5, 7, 9, 0, 2, 4, 6, 8}, result)
+}
+
+func Test_AppendSrcEmptyIntsReturns(t *testing.T) {
+	src := Slice[int]{1, 3, 5, 7, 9}
+	var additional Slice[int]
+
+	result := src.Append(additional)
+
+	assert.Equal(t, Slice[int]{1, 3, 5, 7, 9}, result)
+}
+
+func Test_AppendAdditionalEmptyIntsReturns(t *testing.T) {
+	var src Slice[int]
+	additional := Slice[int]{0, 2, 4, 6, 8}
+
+	result := src.Append(additional)
+
+	assert.Equal(t, Slice[int]{0, 2, 4, 6, 8}, result)
+}
+
 // ANY
 func Test_AnyIntsReturnsTrue(t *testing.T) {
 	numbers := Slice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}

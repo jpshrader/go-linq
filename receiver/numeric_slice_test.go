@@ -16,6 +16,34 @@ func Test_AsNumericSlice(t *testing.T) {
 	assert.Equal(t, NumericSlice[int]{0, 1, 2, 3, 4}, result)
 }
 
+// APPEND
+func Test_NumericSliceAppendIntsReturns(t *testing.T) {
+	src := NumericSlice[int]{1, 3, 5, 7, 9}
+	additional := NumericSlice[int]{0, 2, 4, 6, 8}
+
+	result := src.Append(additional)
+
+	assert.Equal(t, NumericSlice[int]{1, 3, 5, 7, 9, 0, 2, 4, 6, 8}, result)
+}
+
+func Test_NumericSliceAppendSrcEmptyIntsReturns(t *testing.T) {
+	src := NumericSlice[int]{1, 3, 5, 7, 9}
+	var additional NumericSlice[int]
+
+	result := src.Append(additional)
+
+	assert.Equal(t, NumericSlice[int]{1, 3, 5, 7, 9}, result)
+}
+
+func Test_NumericSliceAppendAdditionalEmptyIntsReturns(t *testing.T) {
+	var src NumericSlice[int]
+	additional := NumericSlice[int]{0, 2, 4, 6, 8}
+
+	result := src.Append(additional)
+
+	assert.Equal(t, NumericSlice[int]{0, 2, 4, 6, 8}, result)
+}
+
 // ANY
 func Test_NumericAnyIntsReturnsTrue(t *testing.T) {
 	numbers := NumericSlice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
