@@ -8,8 +8,12 @@ func AsNumericSlice[T golinq.Number](slice []T) NumericSlice[T] {
 	return NumericSlice[T](slice)
 }
 
-func (slice NumericSlice[T]) Append(items []T) NumericSlice[T] {
-	return golinq.Append(slice, items)
+func (slice NumericSlice[T]) Append(item T) NumericSlice[T] {
+	return golinq.Append(slice, item)
+}
+
+func (slice NumericSlice[T]) Concat(items []T) NumericSlice[T] {
+	return golinq.Concat(slice, items)
 }
 
 func (slice NumericSlice[T]) Any(filter golinq.Predicate[T]) bool {

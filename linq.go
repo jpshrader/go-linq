@@ -6,7 +6,11 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-func Append[T any](src []T, items []T) []T {
+func Append[T any](src []T, item T) []T {
+	return append(src, item)
+}
+
+func Concat[T any](src []T, items []T) []T {
 	return append(src, items...)
 }
 

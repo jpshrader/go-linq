@@ -11,8 +11,12 @@ func AsOrderedSlice[T constraints.Ordered](slice []T) OrderedSlice[T] {
 	return OrderedSlice[T](slice)
 }
 
-func (slice OrderedSlice[T]) Append(items []T) OrderedSlice[T] {
-	return golinq.Append(slice, items)
+func (slice OrderedSlice[T]) Append(item T) OrderedSlice[T] {
+	return golinq.Append(slice, item)
+}
+
+func (slice OrderedSlice[T]) Concat(items []T) OrderedSlice[T] {
+	return golinq.Concat(slice, items)
 }
 
 func (slice OrderedSlice[T]) Any(filter golinq.Predicate[T]) bool {

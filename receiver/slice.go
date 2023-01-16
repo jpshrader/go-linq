@@ -10,8 +10,12 @@ func AsSlice[T any](slice []T) Slice[T] {
 	return Slice[T](slice)
 }
 
-func (slice Slice[T]) Append(items []T) Slice[T] {
-	return golinq.Append(slice, items)
+func (slice Slice[T]) Append(item T) Slice[T] {
+	return golinq.Append(slice, item)
+}
+
+func (slice Slice[T]) Concat(items []T) Slice[T] {
+	return golinq.Concat(slice, items)
 }
 
 func (slice Slice[T]) Any(filter golinq.Predicate[T]) bool {

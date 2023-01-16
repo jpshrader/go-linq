@@ -19,27 +19,44 @@ func Test_AsNumericSlice(t *testing.T) {
 // APPEND
 func Test_NumericSliceAppendIntsReturns(t *testing.T) {
 	src := NumericSlice[int]{1, 3, 5, 7, 9}
-	additional := NumericSlice[int]{0, 2, 4, 6, 8}
 
-	result := src.Append(additional)
+	result := src.Append(0)
 
-	assert.Equal(t, NumericSlice[int]{1, 3, 5, 7, 9, 0, 2, 4, 6, 8}, result)
-}
-
-func Test_NumericSliceAppendSrcEmptyIntsReturns(t *testing.T) {
-	src := NumericSlice[int]{1, 3, 5, 7, 9}
-	var additional NumericSlice[int]
-
-	result := src.Append(additional)
-
-	assert.Equal(t, NumericSlice[int]{1, 3, 5, 7, 9}, result)
+	assert.Equal(t, NumericSlice[int]{1, 3, 5, 7, 9, 0}, result)
 }
 
 func Test_NumericSliceAppendAdditionalEmptyIntsReturns(t *testing.T) {
 	var src NumericSlice[int]
+
+	result := src.Append(0)
+
+	assert.Equal(t, NumericSlice[int]{0}, result)
+}
+
+// CONCAT
+func Test_NumericSliceConcatIntsReturns(t *testing.T) {
+	src := NumericSlice[int]{1, 3, 5, 7, 9}
 	additional := NumericSlice[int]{0, 2, 4, 6, 8}
 
-	result := src.Append(additional)
+	result := src.Concat(additional)
+
+	assert.Equal(t, NumericSlice[int]{1, 3, 5, 7, 9, 0, 2, 4, 6, 8}, result)
+}
+
+func Test_NumericSliceConcatSrcEmptyIntsReturns(t *testing.T) {
+	src := NumericSlice[int]{1, 3, 5, 7, 9}
+	var additional NumericSlice[int]
+
+	result := src.Concat(additional)
+
+	assert.Equal(t, NumericSlice[int]{1, 3, 5, 7, 9}, result)
+}
+
+func Test_NumericSliceConcatAdditionalEmptyIntsReturns(t *testing.T) {
+	var src NumericSlice[int]
+	additional := NumericSlice[int]{0, 2, 4, 6, 8}
+
+	result := src.Concat(additional)
 
 	assert.Equal(t, NumericSlice[int]{0, 2, 4, 6, 8}, result)
 }

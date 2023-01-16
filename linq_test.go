@@ -9,27 +9,44 @@ import (
 // APPEND
 func Test_AppendIntsReturns(t *testing.T) {
 	src := []int{1, 3, 5, 7, 9}
-	additional := []int{0, 2, 4, 6, 8}
 
-	result := Append(src, additional)
+	result := Append(src, 0)
 
-	assert.Equal(t, []int{1, 3, 5, 7, 9, 0, 2, 4, 6, 8}, result)
-}
-
-func Test_AppendSrcEmptyIntsReturns(t *testing.T) {
-	src := []int{1, 3, 5, 7, 9}
-	var additional []int
-
-	result := Append(src, additional)
-
-	assert.Equal(t, []int{1, 3, 5, 7, 9}, result)
+	assert.Equal(t, []int{1, 3, 5, 7, 9, 0}, result)
 }
 
 func Test_AppendAdditionalEmptyIntsReturns(t *testing.T) {
 	var src []int
+
+	result := Append(src, 0)
+
+	assert.Equal(t, []int{0}, result)
+}
+
+// CONCAT
+func Test_ConcatIntsReturns(t *testing.T) {
+	src := []int{1, 3, 5, 7, 9}
 	additional := []int{0, 2, 4, 6, 8}
 
-	result := Append(src, additional)
+	result := Concat(src, additional)
+
+	assert.Equal(t, []int{1, 3, 5, 7, 9, 0, 2, 4, 6, 8}, result)
+}
+
+func Test_ConcatSrcEmptyIntsReturns(t *testing.T) {
+	src := []int{1, 3, 5, 7, 9}
+	var additional []int
+
+	result := Concat(src, additional)
+
+	assert.Equal(t, []int{1, 3, 5, 7, 9}, result)
+}
+
+func Test_ConcatAdditionalEmptyIntsReturns(t *testing.T) {
+	var src []int
+	additional := []int{0, 2, 4, 6, 8}
+
+	result := Concat(src, additional)
 
 	assert.Equal(t, []int{0, 2, 4, 6, 8}, result)
 }
