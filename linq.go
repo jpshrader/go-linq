@@ -10,10 +10,6 @@ func Append[T any](src []T, item T) []T {
 	return append(src, item)
 }
 
-func Concat[T any](src []T, items []T) []T {
-	return append(src, items...)
-}
-
 func Any[T any](src []T, isMatch Predicate[T]) bool {
 	for _, item := range src {
 		if isMatch(item) {
@@ -30,6 +26,10 @@ func All[T any](src []T, isMatch Predicate[T]) bool {
 		}
 	}
 	return true
+}
+
+func Concat[T any](src []T, items []T) []T {
+	return append(src, items...)
 }
 
 func IsEmpty[T any](src []T) bool {
