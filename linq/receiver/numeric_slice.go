@@ -1,35 +1,35 @@
 package receiver
 
-import golinq "github.com/jpshrader/go-linq"
+import "github.com/jpshrader/go-linq/linq"
 
-type NumericSlice[T golinq.Number] []T
+type NumericSlice[T linq.Number] []T
 
-func AsNumericSlice[T golinq.Number](slice []T) NumericSlice[T] {
+func AsNumericSlice[T linq.Number](slice []T) NumericSlice[T] {
 	return NumericSlice[T](slice)
 }
 
 func (slice NumericSlice[T]) Append(item T) NumericSlice[T] {
-	return golinq.Append(slice, item)
+	return linq.Append(slice, item)
 }
 
 func (slice NumericSlice[T]) Concat(items []T) NumericSlice[T] {
-	return golinq.Concat(slice, items)
+	return linq.Concat(slice, items)
 }
 
 func (slice NumericSlice[T]) Any(filter func(x T) bool) bool {
-	return golinq.Any(slice, filter)
+	return linq.Any(slice, filter)
 }
 
 func (slice NumericSlice[T]) All(filter func(x T) bool) bool {
-	return golinq.All(slice, filter)
+	return linq.All(slice, filter)
 }
 
 func (slice NumericSlice[T]) IsEmpty() bool {
-	return golinq.IsEmpty(slice)
+	return linq.IsEmpty(slice)
 }
 
 func (slice NumericSlice[T]) Count() int {
-	return golinq.Count(slice)
+	return linq.Count(slice)
 }
 
 func (slice NumericSlice[T]) Contains(item T) bool {
@@ -37,49 +37,49 @@ func (slice NumericSlice[T]) Contains(item T) bool {
 		return x == y
 	}
 
-	return golinq.Contains(slice, isEqual, item)
+	return linq.Contains(slice, isEqual, item)
 }
 
 func (slice NumericSlice[T]) Where(filter func(x T) bool) NumericSlice[T] {
-	return golinq.Where(slice, filter)
+	return linq.Where(slice, filter)
 }
 
 func (slice NumericSlice[T]) Except(filter func(x T) bool) NumericSlice[T] {
-	return golinq.Except(slice, filter)
+	return linq.Except(slice, filter)
 }
 
 func (slice NumericSlice[T]) First(filter func(x T) bool) (T, error) {
-	return golinq.First(slice, filter)
+	return linq.First(slice, filter)
 }
 
 func (slice NumericSlice[T]) Last(filter func(x T) bool) (T, error) {
-	return golinq.Last(slice, filter)
+	return linq.Last(slice, filter)
 }
 
 func (slice NumericSlice[T]) Take(count int) NumericSlice[T] {
-	return golinq.Take(slice, count)
+	return linq.Take(slice, count)
 }
 
 func (slice NumericSlice[T]) Skip(count int) NumericSlice[T] {
-	return golinq.Skip(slice, count)
+	return linq.Skip(slice, count)
 }
 
 func (slice NumericSlice[T]) OrderBy(comparer func(x, y int) bool) NumericSlice[T] {
-	return golinq.OrderBy(slice, comparer)
+	return linq.OrderBy(slice, comparer)
 }
 
 func (slice NumericSlice[T]) Sum() T {
-	return golinq.Sum(slice)
+	return linq.Sum(slice)
 }
 
 func (slice NumericSlice[T]) Average() float64 {
-	return golinq.Average(slice)
+	return linq.Average(slice)
 }
 
 func (slice NumericSlice[T]) Max() T {
-	return golinq.Max(slice)
+	return linq.Max(slice)
 }
 
 func (slice NumericSlice[T]) Min() T {
-	return golinq.Min(slice)
+	return linq.Min(slice)
 }

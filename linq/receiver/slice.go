@@ -1,8 +1,6 @@
 package receiver
 
-import (
-	golinq "github.com/jpshrader/go-linq"
-)
+import "github.com/jpshrader/go-linq/linq"
 
 type Slice[T any] []T
 
@@ -11,57 +9,57 @@ func AsSlice[T any](slice []T) Slice[T] {
 }
 
 func (slice Slice[T]) Append(item T) Slice[T] {
-	return golinq.Append(slice, item)
+	return linq.Append(slice, item)
 }
 
 func (slice Slice[T]) Concat(items []T) Slice[T] {
-	return golinq.Concat(slice, items)
+	return linq.Concat(slice, items)
 }
 
 func (slice Slice[T]) Any(filter func(x T) bool) bool {
-	return golinq.Any(slice, filter)
+	return linq.Any(slice, filter)
 }
 
 func (slice Slice[T]) All(filter func(x T) bool) bool {
-	return golinq.All(slice, filter)
+	return linq.All(slice, filter)
 }
 
 func (slice Slice[T]) IsEmpty() bool {
-	return golinq.IsEmpty(slice)
+	return linq.IsEmpty(slice)
 }
 
 func (slice Slice[T]) Count() int {
-	return golinq.Count(slice)
+	return linq.Count(slice)
 }
 
 func (slice Slice[T]) Contains(isEqual func(x, y T) bool, item T) bool {
-	return golinq.Contains(slice, isEqual, item)
+	return linq.Contains(slice, isEqual, item)
 }
 
 func (slice Slice[T]) Where(filter func(x T) bool) Slice[T] {
-	return golinq.Where(slice, filter)
+	return linq.Where(slice, filter)
 }
 
 func (slice Slice[T]) Except(filter func(x T) bool) Slice[T] {
-	return golinq.Except(slice, filter)
+	return linq.Except(slice, filter)
 }
 
 func (slice Slice[T]) First(filter func(x T) bool) (T, error) {
-	return golinq.First(slice, filter)
+	return linq.First(slice, filter)
 }
 
 func (slice Slice[T]) Last(filter func(x T) bool) (T, error) {
-	return golinq.Last(slice, filter)
+	return linq.Last(slice, filter)
 }
 
 func (slice Slice[T]) Take(count int) Slice[T] {
-	return golinq.Take(slice, count)
+	return linq.Take(slice, count)
 }
 
 func (slice Slice[T]) Skip(count int) Slice[T] {
-	return golinq.Skip(slice, count)
+	return linq.Skip(slice, count)
 }
 
 func (slice Slice[T]) OrderBy(comparer func(x, y int) bool) Slice[T] {
-	return golinq.OrderBy(slice, comparer)
+	return linq.OrderBy(slice, comparer)
 }

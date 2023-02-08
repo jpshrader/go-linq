@@ -1,4 +1,4 @@
-package golinq
+package linq
 
 import "golang.org/x/exp/constraints"
 

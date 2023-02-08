@@ -1,7 +1,7 @@
 package receiver
 
 import (
-	golinq "github.com/jpshrader/go-linq"
+	"github.com/jpshrader/go-linq/linq"
 	"golang.org/x/exp/constraints"
 )
 
@@ -12,27 +12,27 @@ func AsOrderedSlice[T constraints.Ordered](slice []T) OrderedSlice[T] {
 }
 
 func (slice OrderedSlice[T]) Append(item T) OrderedSlice[T] {
-	return golinq.Append(slice, item)
+	return linq.Append(slice, item)
 }
 
 func (slice OrderedSlice[T]) Concat(items []T) OrderedSlice[T] {
-	return golinq.Concat(slice, items)
+	return linq.Concat(slice, items)
 }
 
 func (slice OrderedSlice[T]) Any(filter func(x T) bool) bool {
-	return golinq.Any(slice, filter)
+	return linq.Any(slice, filter)
 }
 
 func (slice OrderedSlice[T]) All(filter func(x T) bool) bool {
-	return golinq.All(slice, filter)
+	return linq.All(slice, filter)
 }
 
 func (slice OrderedSlice[T]) IsEmpty() bool {
-	return golinq.IsEmpty(slice)
+	return linq.IsEmpty(slice)
 }
 
 func (slice OrderedSlice[T]) Count() int {
-	return golinq.Count(slice)
+	return linq.Count(slice)
 }
 
 func (slice OrderedSlice[T]) Contains(item T) bool {
@@ -40,41 +40,41 @@ func (slice OrderedSlice[T]) Contains(item T) bool {
 		return x == y
 	}
 
-	return golinq.Contains(slice, isEqual, item)
+	return linq.Contains(slice, isEqual, item)
 }
 
 func (slice OrderedSlice[T]) Where(filter func(x T) bool) OrderedSlice[T] {
-	return golinq.Where(slice, filter)
+	return linq.Where(slice, filter)
 }
 
 func (slice OrderedSlice[T]) Except(filter func(x T) bool) OrderedSlice[T] {
-	return golinq.Except(slice, filter)
+	return linq.Except(slice, filter)
 }
 
 func (slice OrderedSlice[T]) First(filter func(x T) bool) (T, error) {
-	return golinq.First(slice, filter)
+	return linq.First(slice, filter)
 }
 
 func (slice OrderedSlice[T]) Last(filter func(x T) bool) (T, error) {
-	return golinq.Last(slice, filter)
+	return linq.Last(slice, filter)
 }
 
 func (slice OrderedSlice[T]) Take(count int) OrderedSlice[T] {
-	return golinq.Take(slice, count)
+	return linq.Take(slice, count)
 }
 
 func (slice OrderedSlice[T]) Skip(count int) OrderedSlice[T] {
-	return golinq.Skip(slice, count)
+	return linq.Skip(slice, count)
 }
 
 func (slice OrderedSlice[T]) OrderBy(comparer func(x, y int) bool) OrderedSlice[T] {
-	return golinq.OrderBy(slice, comparer)
+	return linq.OrderBy(slice, comparer)
 }
 
 func (slice OrderedSlice[T]) OrderByAscending() OrderedSlice[T] {
-	return golinq.OrderByAscending(slice)
+	return linq.OrderByAscending(slice)
 }
 
 func (slice OrderedSlice[T]) OrderByDescending() OrderedSlice[T] {
-	return golinq.OrderByDescending(slice)
+	return linq.OrderByDescending(slice)
 }
