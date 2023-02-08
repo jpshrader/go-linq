@@ -3,7 +3,7 @@ package receiver
 import (
 	"testing"
 
-	"github.com/jpshrader/go-linq/linq"
+	golinq "github.com/jpshrader/go-linq"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -17,7 +17,7 @@ func Test_Slice(t *testing.T) {
 		Skip(5).
 		Take(5).
 		Where(isEven).
-		First(linq.NilPredicate[int])
+		First(golinq.NilPredicate[int])
 
 	assert.Nil(t, err)
 	assert.Equal(t, 6, result)
@@ -33,7 +33,7 @@ func Test_NumericSlice(t *testing.T) {
 		Skip(5).
 		Take(5).
 		Where(isEven).
-		First(linq.NilPredicate[int])
+		First(golinq.NilPredicate[int])
 
 	assert.Nil(t, err)
 	assert.Equal(t, 6, result)
@@ -49,7 +49,7 @@ func Test_OrderedSlice(t *testing.T) {
 		Skip(5).
 		Take(5).
 		Where(isEven).
-		First(linq.NilPredicate[int])
+		First(golinq.NilPredicate[int])
 
 	assert.Nil(t, err)
 	assert.Equal(t, 6, result)

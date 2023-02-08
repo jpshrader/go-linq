@@ -3,7 +3,7 @@ package receiver
 import (
 	"testing"
 
-	linq "github.com/jpshrader/go-linq/linq"
+	golinq "github.com/jpshrader/go-linq"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -252,7 +252,7 @@ func Test_NumericFirstIntsReturnsNotFound(t *testing.T) {
 	result, err := numbers.First(isOdd)
 
 	assert.NotNil(t, err)
-	assert.Equal(t, err, linq.NotFoundError{})
+	assert.Equal(t, err, golinq.NotFoundError{})
 	assert.Equal(t, result, 0)
 }
 
@@ -280,7 +280,7 @@ func Test_NumericLastIntsReturnsNotFound(t *testing.T) {
 	result, err := numbers.Last(isOdd)
 
 	assert.NotNil(t, err)
-	assert.Equal(t, err, linq.NotFoundError{})
+	assert.Equal(t, err, golinq.NotFoundError{})
 	assert.Equal(t, result, 0)
 }
 

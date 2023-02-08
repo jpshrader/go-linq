@@ -1,4 +1,4 @@
-package linq
+package golinq
 
 import (
 	"sort"
