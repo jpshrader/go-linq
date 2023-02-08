@@ -637,3 +637,53 @@ func Test_AverageCIntsReturnsNil(t *testing.T) {
 
 	assert.Equal(t, float64(0), result)
 }
+
+// REVERSE
+func Test_ReverseIntsReturns(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+	result := Reverse(numbers)
+
+	assert.Equal(t, []int{9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, result)
+}
+
+func Test_ReverseIntsReturnsNil(t *testing.T) {
+	numbers := []int{}
+
+	result := Reverse(numbers)
+
+	var expected []int
+	assert.Equal(t, expected, result)
+}
+
+// GROUP BY
+func Test_GroupByIntsReturns(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+	result := GroupBy(numbers, func(x int) int {
+		return x % 2
+	})
+
+	assert.Equal(t, map[int][]int{0: {0, 2, 4, 6, 8}, 1: {1, 3, 5, 7, 9}}, result)
+}
+
+func Test_GroupByIntsReturnsNil(t *testing.T) {
+	numbers := []int{}
+
+	result := GroupBy(numbers, func(x int) int {
+		return x % 2
+	})
+
+	assert.Equal(t, map[int][]int{}, result)
+}
+
+// AGGREGRATE
+func Test_AggregateIntsReturns(t *testing.T) {
+	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+	result := Aggregate(numbers, 0, func(x int, y int) int {
+		return x + y
+	})
+
+	assert.Equal(t, 45, result)
+}

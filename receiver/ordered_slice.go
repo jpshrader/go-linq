@@ -19,11 +19,11 @@ func (slice OrderedSlice[T]) Concat(items []T) OrderedSlice[T] {
 	return golinq.Concat(slice, items)
 }
 
-func (slice OrderedSlice[T]) Any(filter golinq.Predicate[T]) bool {
+func (slice OrderedSlice[T]) Any(filter func(x T) bool) bool {
 	return golinq.Any(slice, filter)
 }
 
-func (slice OrderedSlice[T]) All(filter golinq.Predicate[T]) bool {
+func (slice OrderedSlice[T]) All(filter func(x T) bool) bool {
 	return golinq.All(slice, filter)
 }
 
@@ -36,26 +36,26 @@ func (slice OrderedSlice[T]) Count() int {
 }
 
 func (slice OrderedSlice[T]) Contains(item T) bool {
-	isEqual := func (x, y T) bool {
+	isEqual := func(x, y T) bool {
 		return x == y
 	}
 
 	return golinq.Contains(slice, isEqual, item)
 }
 
-func (slice OrderedSlice[T]) Where(filter golinq.Predicate[T]) OrderedSlice[T] {
+func (slice OrderedSlice[T]) Where(filter func(x T) bool) OrderedSlice[T] {
 	return golinq.Where(slice, filter)
 }
 
-func (slice OrderedSlice[T]) Except(filter golinq.Predicate[T]) OrderedSlice[T] {
+func (slice OrderedSlice[T]) Except(filter func(x T) bool) OrderedSlice[T] {
 	return golinq.Except(slice, filter)
 }
 
-func (slice OrderedSlice[T]) First(filter golinq.Predicate[T]) (T, error) {
+func (slice OrderedSlice[T]) First(filter func(x T) bool) (T, error) {
 	return golinq.First(slice, filter)
 }
 
-func (slice OrderedSlice[T]) Last(filter golinq.Predicate[T]) (T, error) {
+func (slice OrderedSlice[T]) Last(filter func(x T) bool) (T, error) {
 	return golinq.Last(slice, filter)
 }
 
@@ -67,7 +67,7 @@ func (slice OrderedSlice[T]) Skip(count int) OrderedSlice[T] {
 	return golinq.Skip(slice, count)
 }
 
-func (slice OrderedSlice[T]) OrderBy(comparer golinq.IndexComparer[T]) OrderedSlice[T] {
+func (slice OrderedSlice[T]) OrderBy(comparer func(x, y int) bool) OrderedSlice[T] {
 	return golinq.OrderBy(slice, comparer)
 }
 
