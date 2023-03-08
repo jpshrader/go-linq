@@ -9,9 +9,9 @@ import (
 )
 
 func main() {
-	numberExample(false)
+	numberExample(true)
 	constraintExample(true)
-	typeExample(false)
+	typeExample(true)
 }
 
 // NUMBERS EXAMPLE
@@ -40,6 +40,7 @@ func numberExample(print bool) {
 		OrderByAscending()
 
 	if print {
+		fmt.Println("================= NUMBERS EXAMPLE =================")
 		fmt.Printf("numbers: %v\n", numbers)
 		fmt.Printf("even numbers: %v\n", evenNums)
 		fmt.Printf("odd numbers: %v\n", oddNums)
@@ -56,6 +57,7 @@ func constraintExample(print bool) {
 	strs := receiver.AsOrderedSlice(strings)
 
 	if print {
+		fmt.Println("================= CONSTRAINTS EXAMPLE =================")
 		fmt.Printf("nums: %d\n", nums.OrderByAscending())
 		fmt.Printf("sum nums: %d\n", nums.Sum())
 		fmt.Printf("max num: %d\n", nums.Max())
@@ -85,6 +87,7 @@ func typeExample(print bool) {
 	emp := getNamesInterfaceMethod(employees)
 
 	if print {
+		fmt.Println("================= PEOPLE EXAMPLE =================")
 		fmt.Printf("people: %v\n", people)
 		fmt.Printf("employees: %v\n", emp)
 	}
