@@ -4,7 +4,18 @@ An attempt to recreate the ease and usefulness of the [linq dotnet library](http
 
 ## Usage
 
+Real-world examples can be found [here](cmd/main.go)
+
 ```
+package main
+
+import (
+	"fmt"
+
+	golinq "github.com/jpshrader/go-linq"
+	"github.com/jpshrader/go-linq/receiver"
+)
+
 func isEven(x int) bool {
     return x%2 == 0
 }
@@ -14,15 +25,15 @@ func isOdd(x int) bool {
 }
 
 func main() {
-    numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+	fmt.Printf("numbers: %v\n", numbers)
 
-    evenNumbers := Where(numbers, isEven)
-    oddNumbers := Where(numbers, isOdd)
+	evenNums := golinq.Where(numbers, isEven)
+	fmt.Printf("even numbers: %v\n", evenNums)
 
-    numberSlice := AsSlice(numbers)
-    
-    receiverEvenNums := numbers.Where(isEven)
-    receiverOddNums := numbers.Where(isOdd)
+	nums := receiver.AsNumericSlice(numbers)
+	oddNums := nums.Where(isOdd)
+	fmt.Printf("odd numbers: %v\n", oddNums)
 }
 ```
 
