@@ -257,7 +257,7 @@ func Test_FirstIntsReturnsNotFound(t *testing.T) {
 func Test_FirstIntsReturns(t *testing.T) {
 	numbers := []int{0, 2}
 
-	result, err := First(numbers, NilPredicate[int])
+	result, err := First(numbers, nil)
 
 	assert.Nil(t, err)
 	assert.Equal(t, 0, result)

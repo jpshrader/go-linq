@@ -68,6 +68,9 @@ func Except[T any](src []T, isMatch func(x T) bool) (ret []T) {
 }
 
 func First[T any](src []T, isMatch func(x T) bool) (T, error) {
+	if isMatch == nil {
+		isMatch = NilPredicate[T]
+	}
 	for _, item := range src {
 		if isMatch(item) {
 			return item, nil

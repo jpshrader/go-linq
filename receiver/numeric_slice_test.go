@@ -416,3 +416,57 @@ func Test_NumericAverageIntsReturnsNil(t *testing.T) {
 
 	assert.Equal(t, float64(0), result)
 }
+
+// ORDER BY ASCENDING
+func Test_NumericOrderByAscendingIntsReturns(t *testing.T) {
+	numbers := NumericSlice[int]{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
+
+	result := numbers.OrderByAscending()
+
+	assert.Equal(t, NumericSlice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, result)
+}
+
+// ORDER BY DESCENDING
+func Test_NumericOrderByDescendingIntsReturns(t *testing.T) {
+	numbers := NumericSlice[int]{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
+
+	result := numbers.OrderByDescending()
+
+	assert.Equal(t, NumericSlice[int]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, result)
+}
+
+// REVERSE
+func Test_NumericReverseIntsReturns(t *testing.T) {
+	numbers := NumericSlice[int]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+	result := numbers.Reverse()
+
+	assert.Equal(t, NumericSlice[int]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, result)
+}
+
+func Test_NumericReverseIntsReturnsNil(t *testing.T) {
+	numbers := NumericSlice[int]{}
+
+	result := numbers.Reverse()
+
+	var expected NumericSlice[int]
+	assert.Equal(t, expected, result)
+}
+
+// DISTINCT
+func Test_DistinctIntsReturns(t *testing.T) {
+	numbers := NumericSlice[int]{0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5}
+
+	result := numbers.Distinct()
+
+	assert.Equal(t, NumericSlice[int]{0, 1, 2, 3, 4, 5}, result)
+}
+
+func Test_DistinctIntsReturnsNil(t *testing.T) {
+	numbers := NumericSlice[int]{}
+
+	result := numbers.Distinct()
+
+	var expected NumericSlice[int]
+	assert.Equal(t, expected, result)
+}

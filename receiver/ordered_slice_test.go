@@ -358,15 +358,3 @@ func Test_OrderedOrderByDescendingIntsReturns(t *testing.T) {
 
 	assert.Equal(t, OrderedSlice[int]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, result)
 }
-
-func Test_OrderedOrderByIntsReturnsDescending(t *testing.T) {
-	numbers := Slice[int]{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
-
-	greaterThan := func(i, j int) bool {
-		return numbers[i] > numbers[j]
-	}
-
-	result := numbers.OrderBy(greaterThan)
-
-	assert.Equal(t, Slice[int]{9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, result)
-}

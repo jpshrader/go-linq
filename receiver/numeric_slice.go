@@ -12,7 +12,7 @@ func (slice NumericSlice[T]) Append(item T) NumericSlice[T] {
 	return golinq.Append(slice, item)
 }
 
-func (slice NumericSlice[T]) Concat(items []T) NumericSlice[T] {
+func (slice NumericSlice[T]) Concat(items NumericSlice[T]) NumericSlice[T] {
 	return golinq.Concat(slice, items)
 }
 
@@ -68,6 +68,14 @@ func (slice NumericSlice[T]) OrderBy(comparer func(x, y int) bool) NumericSlice[
 	return golinq.OrderBy(slice, comparer)
 }
 
+func (slice NumericSlice[T]) OrderByAscending() NumericSlice[T] {
+	return golinq.OrderByAscending(slice)
+}
+
+func (slice NumericSlice[T]) OrderByDescending() NumericSlice[T] {
+	return golinq.OrderByDescending(slice)
+}
+
 func (slice NumericSlice[T]) Sum() T {
 	return golinq.Sum(slice)
 }
@@ -82,4 +90,12 @@ func (slice NumericSlice[T]) Max() T {
 
 func (slice NumericSlice[T]) Min() T {
 	return golinq.Min(slice)
+}
+
+func (slice NumericSlice[T]) Reverse() NumericSlice[T] {
+	return golinq.Reverse(slice)
+}
+
+func (slice NumericSlice[T]) Distinct() NumericSlice[T] {
+	return golinq.Distinct(slice)
 }
