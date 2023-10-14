@@ -67,10 +67,19 @@ func constraintExample() {
 func typeExample() {
 	persons := []Person{
 		{Name: "John", Age: 26},
+		{Name: "Jack", Age: 23},
 	}
 	employees := []Employee{
 		{Name: "Jack", Age: 26},
+		{Name: "John", Age: 23},
 	}
+
+	above25 := func(p Person) bool {
+		return p.Age >= 25
+	}
+	personsSlice := receiver.AsSlice(persons)
+	fmt.Println("persons under 25 years old: ", personsSlice.Except(above25))
+	fmt.Println("persons above 25 years old: ", personsSlice.Where(above25))
 
 	getPersonNames(persons)
 
