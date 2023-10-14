@@ -9,9 +9,9 @@ import (
 )
 
 func main() {
-	numberExample(true)
-	constraintExample(true)
-	typeExample(true)
+	numberExample()
+	constraintExample()
+	typeExample()
 }
 
 // NUMBERS EXAMPLE
@@ -23,7 +23,7 @@ func isOdd(x int) bool {
 	return x%2 == 1
 }
 
-func numberExample(print bool) {
+func numberExample() {
 	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 	evenNums := golinq.Where(numbers, isEven)
@@ -39,36 +39,32 @@ func numberExample(print bool) {
 		Take(5).
 		OrderByAscending()
 
-	if print {
-		fmt.Println("================= NUMBERS EXAMPLE =================")
-		fmt.Printf("numbers: %v\n", numbers)
-		fmt.Printf("even numbers: %v\n", evenNums)
-		fmt.Printf("odd numbers: %v\n", oddNums)
-		fmt.Printf("linq fun: %v\n", linqFun)
-	}
+	fmt.Println("================= NUMBERS EXAMPLE =================")
+	fmt.Printf("numbers: %v\n", numbers)
+	fmt.Printf("even numbers: %v\n", evenNums)
+	fmt.Printf("odd numbers: %v\n", oddNums)
+	fmt.Printf("linq fun: %v\n", linqFun)
 }
 
 // CONSTRAINTS EXAMPLE
-func constraintExample(print bool) {
+func constraintExample() {
 	numbers := []int{9, 6, 5, 4, 8, 2, 7, 3, 1, 0}
 	strings := []string{"j", "f", "g", "c", "a", "h", "b", "e", "i", "d"}
 
 	nums := receiver.AsNumericSlice(numbers)
 	strs := receiver.AsOrderedSlice(strings)
 
-	if print {
-		fmt.Println("================= CONSTRAINTS EXAMPLE =================")
-		fmt.Printf("nums: %d\n", nums.OrderByAscending())
-		fmt.Printf("sum nums: %d\n", nums.Sum())
-		fmt.Printf("max num: %d\n", nums.Max())
-		fmt.Printf("letters: %s\n", strs.OrderByAscending())
-		item, _ := strs.OrderByDescending().First(nil)
-		fmt.Printf("letter count: %s\n", item)
-	}
+	fmt.Println("================= CONSTRAINTS EXAMPLE =================")
+	fmt.Printf("nums: %d\n", nums.OrderByAscending())
+	fmt.Printf("sum nums: %d\n", nums.Sum())
+	fmt.Printf("max num: %d\n", nums.Max())
+	fmt.Printf("letters: %s\n", strs.OrderByAscending())
+	item, _ := strs.OrderByDescending().First(nil)
+	fmt.Printf("letter count: %s\n", item)
 }
 
 // TYPE EXAMPLE
-func typeExample(print bool) {
+func typeExample() {
 	persons := []Person{
 		{Name: "John", Age: 26},
 	}
@@ -79,18 +75,14 @@ func typeExample(print bool) {
 	getPersonNames(persons)
 
 	getNames(persons)
-	getNamesInterface(persons)
 	people := getNamesInterfaceMethod(persons)
 
 	getNames(employees)
-	getNamesInterface(employees)
 	emp := getNamesInterfaceMethod(employees)
 
-	if print {
-		fmt.Println("================= PEOPLE EXAMPLE =================")
-		fmt.Printf("people: %v\n", people)
-		fmt.Printf("employees: %v\n", emp)
-	}
+	fmt.Println("================= PEOPLE EXAMPLE =================")
+	fmt.Printf("people: %v\n", people)
+	fmt.Printf("employees: %v\n", emp)
 }
 
 type Person struct {
@@ -123,19 +115,6 @@ func getPersonNames[T Person](people []T) []string {
 }
 
 func getNames[T Person | Employee](people []T) []string {
-	return golinq.Select(people, func(p T) string {
-		switch reflect.TypeOf(p) {
-		case reflect.TypeOf(Person{}):
-			return Person(p).Name
-		case reflect.TypeOf(Employee{}):
-			return Employee(p).Name
-		default:
-			return ""
-		}
-	})
-}
-
-func getNamesInterface[T PersonOrEmployee](people []T) []string {
 	return golinq.Select(people, func(p T) string {
 		switch reflect.TypeOf(p) {
 		case reflect.TypeOf(Person{}):
