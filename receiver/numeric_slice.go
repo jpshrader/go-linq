@@ -1,6 +1,8 @@
 package receiver
 
-import golinq "github.com/jpshrader/go-linq"
+import (
+	golinq "github.com/jpshrader/go-linq"
+)
 
 type NumericSlice[T golinq.Number] []T
 

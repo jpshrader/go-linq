@@ -1,5 +1,5 @@
 run:
-	go run ./cmd/main.go
+	go run ./cmd/examples/main.go
 
 benchmark:
 	go test -bench=. -benchmem ./...
