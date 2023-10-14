@@ -4,98 +4,98 @@ import golinq "github.com/jpshrader/go-linq"
 
 type NumericSlice[T golinq.Number] []T
 
-func AsNumericSlice[T golinq.Number](slice []T) NumericSlice[T] {
-	return NumericSlice[T](slice)
+func AsNumericSlice[T golinq.Number](s []T) NumericSlice[T] {
+	return NumericSlice[T](s)
 }
 
-func (slice NumericSlice[T]) Append(item T) NumericSlice[T] {
-	return golinq.Append(slice, item)
+func (s NumericSlice[T]) Append(item T) NumericSlice[T] {
+	return golinq.Append(s, item)
 }
 
-func (slice NumericSlice[T]) Concat(items NumericSlice[T]) NumericSlice[T] {
-	return golinq.Concat(slice, items)
+func (s NumericSlice[T]) Concat(items NumericSlice[T]) NumericSlice[T] {
+	return golinq.Concat(s, items)
 }
 
-func (slice NumericSlice[T]) Any(filter func(x T) bool) bool {
-	return golinq.Any(slice, filter)
+func (s NumericSlice[T]) Any(filter func(x T) bool) bool {
+	return golinq.Any(s, filter)
 }
 
-func (slice NumericSlice[T]) All(filter func(x T) bool) bool {
-	return golinq.All(slice, filter)
+func (s NumericSlice[T]) All(filter func(x T) bool) bool {
+	return golinq.All(s, filter)
 }
 
-func (slice NumericSlice[T]) IsEmpty() bool {
-	return golinq.IsEmpty(slice)
+func (s NumericSlice[T]) IsEmpty() bool {
+	return golinq.IsEmpty(s)
 }
 
-func (slice NumericSlice[T]) Count() int {
-	return golinq.Count(slice)
+func (s NumericSlice[T]) Count() int {
+	return golinq.Count(s)
 }
 
-func (slice NumericSlice[T]) Contains(item T) bool {
+func (s NumericSlice[T]) Contains(item T) bool {
 	isEqual := func(x, y T) bool {
 		return x == y
 	}
 
-	return golinq.Contains(slice, isEqual, item)
+	return golinq.Contains(s, isEqual, item)
 }
 
-func (slice NumericSlice[T]) Where(filter func(x T) bool) NumericSlice[T] {
-	return golinq.Where(slice, filter)
+func (s NumericSlice[T]) Where(filter func(x T) bool) NumericSlice[T] {
+	return golinq.Where(s, filter)
 }
 
-func (slice NumericSlice[T]) Except(filter func(x T) bool) NumericSlice[T] {
-	return golinq.Except(slice, filter)
+func (s NumericSlice[T]) Except(filter func(x T) bool) NumericSlice[T] {
+	return golinq.Except(s, filter)
 }
 
-func (slice NumericSlice[T]) First(filter func(x T) bool) (T, error) {
-	return golinq.First(slice, filter)
+func (s NumericSlice[T]) First(filter func(x T) bool) (T, error) {
+	return golinq.First(s, filter)
 }
 
-func (slice NumericSlice[T]) Last(filter func(x T) bool) (T, error) {
-	return golinq.Last(slice, filter)
+func (s NumericSlice[T]) Last(filter func(x T) bool) (T, error) {
+	return golinq.Last(s, filter)
 }
 
-func (slice NumericSlice[T]) Take(count int) NumericSlice[T] {
-	return golinq.Take(slice, count)
+func (s NumericSlice[T]) Take(count int) NumericSlice[T] {
+	return golinq.Take(s, count)
 }
 
-func (slice NumericSlice[T]) Skip(count int) NumericSlice[T] {
-	return golinq.Skip(slice, count)
+func (s NumericSlice[T]) Skip(count int) NumericSlice[T] {
+	return golinq.Skip(s, count)
 }
 
-func (slice NumericSlice[T]) OrderBy(comparer func(x, y int) bool) NumericSlice[T] {
-	return golinq.OrderBy(slice, comparer)
+func (s NumericSlice[T]) OrderBy(comparer func(x, y int) bool) NumericSlice[T] {
+	return golinq.OrderBy(s, comparer)
 }
 
-func (slice NumericSlice[T]) OrderByAscending() NumericSlice[T] {
-	return golinq.OrderByAscending(slice)
+func (s NumericSlice[T]) OrderByAscending() NumericSlice[T] {
+	return golinq.OrderByAscending(s)
 }
 
-func (slice NumericSlice[T]) OrderByDescending() NumericSlice[T] {
-	return golinq.OrderByDescending(slice)
+func (s NumericSlice[T]) OrderByDescending() NumericSlice[T] {
+	return golinq.OrderByDescending(s)
 }
 
-func (slice NumericSlice[T]) Sum() T {
-	return golinq.Sum(slice)
+func (s NumericSlice[T]) Sum() T {
+	return golinq.Sum(s)
 }
 
-func (slice NumericSlice[T]) Average() float64 {
-	return golinq.Average(slice)
+func (s NumericSlice[T]) Average() float64 {
+	return golinq.Average(s)
 }
 
-func (slice NumericSlice[T]) Max() T {
-	return golinq.Max(slice)
+func (s NumericSlice[T]) Max() T {
+	return golinq.Max(s)
 }
 
-func (slice NumericSlice[T]) Min() T {
-	return golinq.Min(slice)
+func (s NumericSlice[T]) Min() T {
+	return golinq.Min(s)
 }
 
-func (slice NumericSlice[T]) Reverse() NumericSlice[T] {
-	return golinq.Reverse(slice)
+func (s NumericSlice[T]) Reverse() NumericSlice[T] {
+	return golinq.Reverse(s)
 }
 
-func (slice NumericSlice[T]) Distinct() NumericSlice[T] {
-	return golinq.Distinct(slice)
+func (s NumericSlice[T]) Distinct() NumericSlice[T] {
+	return golinq.Distinct(s)
 }

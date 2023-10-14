@@ -306,7 +306,7 @@ func Test_OrderedTakeIntsReturnsAllAvailableNil(t *testing.T) {
 
 	result := numbers.Take(5)
 
-	var expected OrderedSlice[int]
+	expected := OrderedSlice[int]{}
 	assert.Equal(t, expected, result)
 }
 
@@ -324,7 +324,7 @@ func Test_OrderedSkipIntsReturnsAllAvailableExceptFirst5(t *testing.T) {
 
 	result := numbers.Skip(5)
 
-	var expected OrderedSlice[int]
+	expected := OrderedSlice[int]{}
 	assert.Equal(t, expected, result)
 }
 

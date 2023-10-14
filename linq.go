@@ -6,12 +6,12 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-func Append[T any](src []T, item T) []T {
-	return append(src, item)
+func Append[T any](items []T, item T) []T {
+	return append(items, item)
 }
 
-func Any[T any](src []T, isMatch func(x T) bool) bool {
-	for _, item := range src {
+func Any[T any](items []T, isMatch func(x T) bool) bool {
+	for _, item := range items {
 		if isMatch(item) {
 			return true
 		}
@@ -19,8 +19,8 @@ func Any[T any](src []T, isMatch func(x T) bool) bool {
 	return false
 }
 
-func All[T any](src []T, isMatch func(x T) bool) bool {
-	for _, item := range src {
+func All[T any](items []T, isMatch func(x T) bool) bool {
+	for _, item := range items {
 		if !isMatch(item) {
 			return false
 		}
@@ -28,20 +28,20 @@ func All[T any](src []T, isMatch func(x T) bool) bool {
 	return true
 }
 
-func Concat[T any](src []T, items []T) []T {
-	return append(src, items...)
+func Concat[T any](items []T, newItems []T) []T {
+	return append(items, newItems...)
 }
 
-func IsEmpty[T any](src []T) bool {
-	return len(src) == 0
+func IsEmpty[T any](items []T) bool {
+	return len(items) == 0
 }
 
-func Count[T any](src []T) int {
-	return len(src)
+func Count[T any](items []T) int {
+	return len(items)
 }
 
-func Contains[T any](src []T, isEqual func(x, y T) bool, item T) bool {
-	for _, element := range src {
+func Contains[T any](items []T, isEqual func(x, y T) bool, item T) bool {
+	for _, element := range items {
 		if isEqual(item, element) {
 			return true
 		}
@@ -49,29 +49,31 @@ func Contains[T any](src []T, isEqual func(x, y T) bool, item T) bool {
 	return false
 }
 
-func Where[T any](src []T, isMatch func(x T) bool) (ret []T) {
-	for _, item := range src {
+func Where[T any](items []T, isMatch func(x T) bool) []T {
+	out := make([]T, 0, len(items))
+	for _, item := range items {
 		if isMatch(item) {
-			ret = append(ret, item)
+			out = append(out, item)
 		}
 	}
-	return
+	return out
 }
 
-func Except[T any](src []T, isMatch func(x T) bool) (ret []T) {
-	for _, item := range src {
+func Except[T any](items []T, isMatch func(x T) bool) []T {
+	out := make([]T, 0, len(items))
+	for _, item := range items {
 		if !isMatch(item) {
-			ret = append(ret, item)
+			out = append(out, item)
 		}
 	}
-	return
+	return out
 }
 
-func First[T any](src []T, isMatch func(x T) bool) (T, error) {
+func First[T any](items []T, isMatch func(x T) bool) (T, error) {
 	if isMatch == nil {
 		isMatch = NilPredicate[T]
 	}
-	for _, item := range src {
+	for _, item := range items {
 		if isMatch(item) {
 			return item, nil
 		}
@@ -79,10 +81,10 @@ func First[T any](src []T, isMatch func(x T) bool) (T, error) {
 	return *new(T), NotFoundError{}
 }
 
-func Last[T any](src []T, isMatch func(x T) bool) (T, error) {
+func Last[T any](items []T, isMatch func(x T) bool) (T, error) {
 	var last T
 	found := false
-	for _, item := range src {
+	for _, item := range items {
 		if isMatch(item) {
 			last = item
 			found = true
@@ -95,163 +97,174 @@ func Last[T any](src []T, isMatch func(x T) bool) (T, error) {
 	return *new(T), NotFoundError{}
 }
 
-func Take[T any](src []T, count int) (ret []T) {
-	for i, item := range src {
-		if i < count {
-			ret = append(ret, item)
-		} else {
-			return
+func Take[T any](items []T, count int) []T {
+	out := make([]T, 0, count)
+	for i, item := range items {
+		if i >= count {
+			return out
 		}
+		out = append(out, item)
 	}
-	return
+	return out
 }
 
-func Skip[T any](src []T, count int) (ret []T) {
-	if count > len(src) {
-		return
+func Skip[T any](items []T, count int) []T {
+	if count >= len(items) {
+		return []T{}
 	}
 
-	for i := count; i < len(src); i++ {
-		ret = append(ret, src[i])
+	out := make([]T, 0, len(items)-count)
+	for i := count; i < len(items); i++ {
+		out = Append(out, items[i])
 	}
-	return
+	return out
 }
 
-func Select[T, R any](src []T, mapper func(x T) R) (ret []R) {
-	for _, item := range src {
-		ret = append(ret, mapper(item))
+func Select[T, R any](items []T, mapper func(x T) R) []R {
+	out := make([]R, 0, len(items))
+	for _, item := range items {
+		out = append(out, mapper(item))
 	}
-	return
+	return out
 }
 
-func Distinct[T comparable](src []T) (ret []T) {
-	existingItems := make(map[T]bool, 0)
-	for _, item := range src {
-		if !existingItems[item] {
-			ret = append(ret, item)
+func Distinct[T comparable](items []T) []T {
+	out := make([]T, 0, len(items))
+	existingItems := make(map[T]bool, len(items))
+	for _, item := range items {
+		if _, found := existingItems[item]; !found {
+			out = append(out, item)
 			existingItems[item] = true
 		}
 	}
-	return
+	return out
 }
 
-func DistinctC[T any, R comparable](src []T, mapper func(x T) R) (ret []T) {
-	existingItems := make(map[R]bool)
-	for _, item := range src {
+func DistinctC[T any, R comparable](items []T, mapper func(x T) R) []T {
+	out := make([]T, 0, len(items))
+	existingItems := make(map[R]bool, len(items))
+	for _, item := range items {
 		itemId := mapper(item)
 		if !existingItems[itemId] {
-			ret = append(ret, item)
+			out = append(out, item)
 			existingItems[itemId] = true
 		}
 	}
-	return
+	return out
 }
 
-func OrderBy[T any](src []T, comparer func(x, y int) bool) []T {
-	sort.Slice(src, comparer)
-	return src
+func OrderBy[T any](items []T, comparer func(x, y int) bool) []T {
+	sort.Slice(items, comparer)
+	return items
 }
 
-func OrderByAscending[T constraints.Ordered](src []T) []T {
+func OrderByAscending[T constraints.Ordered](items []T) []T {
 	comparer := func(i, j int) bool {
-		return src[i] < src[j]
+		return items[i] < items[j]
 	}
-	sort.Slice(src, comparer)
-	return src
+	sort.Slice(items, comparer)
+	return items
 }
 
-func OrderByDescending[T constraints.Ordered](src []T) []T {
+func OrderByDescending[T constraints.Ordered](items []T) []T {
 	comparer := func(i, j int) bool {
-		return src[i] > src[j]
+		return items[i] > items[j]
 	}
-	sort.Slice(src, comparer)
-	return src
+	sort.Slice(items, comparer)
+	return items
 }
 
-func Sum[T Number](src []T) (ret T) {
-	for _, item := range src {
-		ret += item
+func Sum[T Number](items []T) T {
+	out := T(0)
+	for _, item := range items {
+		out += item
 	}
-	return
+	return out
 }
 
-func SumC[T any, R Number](src []T, mapper func(x T) R) (ret R) {
-	for _, item := range src {
-		ret += mapper(item)
+func SumC[T any, R Number](items []T, mapper func(x T) R) R {
+	out := R(0)
+	for _, item := range items {
+		out += mapper(item)
 	}
-	return
+	return out
 }
 
-func Average[T Number](src []T) float64 {
-	length := len(src)
+func Average[T Number](items []T) float64 {
+	length := len(items)
 	if length > 0 {
-		return float64(Sum(src)) / float64(length)
+		return float64(Sum(items)) / float64(length)
 	}
 	return 0
 }
 
-func AverageC[T any, R Number](src []T, mapper func(x T) R) float64 {
-	length := len(src)
+func AverageC[T any, R Number](items []T, mapper func(x T) R) float64 {
+	length := len(items)
 	if length > 0 {
-		return float64(SumC(src, mapper)) / float64(length)
+		return float64(SumC(items, mapper)) / float64(length)
 	}
 	return 0
 }
 
-func Max[T Number](src []T) (ret T) {
-	for _, item := range src {
-		if item > ret {
-			ret = item
+func Max[T Number](items []T) T {
+	out := T(0)
+	for _, item := range items {
+		if item > out {
+			out = item
 		}
 	}
-	return
+	return out
 }
 
-func MaxC[T any, R constraints.Ordered](src []T, mapper func(x T) R) (ret T) {
-	for _, item := range src {
-		if mapper(item) > mapper(ret) {
-			ret = item
+func MaxC[T any, R constraints.Ordered](items []T, mapper func(x T) R) T {
+	out := *new(T)
+	for _, item := range items {
+		if mapper(item) > mapper(out) {
+			out = item
 		}
 	}
-	return
+	return out
 }
 
-func Min[T Number](src []T) (ret T) {
-	for _, item := range src {
-		if item < ret {
-			ret = item
+func Min[T Number](items []T) T {
+	out := *new(T)
+	for _, item := range items {
+		if item < out {
+			out = item
 		}
 	}
-	return
+	return out
 }
 
-func MinC[T any, R constraints.Ordered](src []T, mapper func(x T) R) (ret T) {
-	for _, item := range src {
-		if mapper(item) < mapper(ret) {
-			ret = item
+func MinC[T any, R constraints.Ordered](items []T, mapper func(x T) R) T {
+	out := *new(T)
+	for _, item := range items {
+		if mapper(item) < mapper(out) {
+			out = item
 		}
 	}
-	return
+	return out
 }
 
-func Reverse[T any](src []T) (ret []T) {
-	for i := len(src) - 1; i >= 0; i-- {
-		ret = append(ret, src[i])
+func Reverse[T any](items []T) []T {
+	out := make([]T, 0, len(items))
+	for i := len(items) - 1; i >= 0; i-- {
+		out = append(out, items[i])
 	}
-	return
+	return out
 }
 
-func GroupBy[T any, R comparable](src []T, mapper func(x T) R) (ret map[R][]T) {
-	ret = make(map[R][]T)
-	for _, item := range src {
+func GroupBy[T any, R comparable](items []T, mapper func(x T) R) map[R][]T {
+	out := make(map[R][]T, len(items))
+	for _, item := range items {
 		key := mapper(item)
-		ret[key] = append(ret[key], item)
+		out[key] = append(out[key], item)
 	}
-	return
+	return out
 }
 
-func Aggregate[T any](src []T, seed T, accumulator func(T, T) T) T {
-	for _, item := range src {
+func Aggregate[T any](items []T, seed T, accumulator func(T, T) T) T {
+	for _, item := range items {
 		seed = accumulator(seed, item)
 	}
 	return seed

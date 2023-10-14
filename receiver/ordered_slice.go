@@ -7,74 +7,74 @@ import (
 
 type OrderedSlice[T constraints.Ordered] []T
 
-func AsOrderedSlice[T constraints.Ordered](slice []T) OrderedSlice[T] {
-	return OrderedSlice[T](slice)
+func AsOrderedSlice[T constraints.Ordered](s []T) OrderedSlice[T] {
+	return OrderedSlice[T](s)
 }
 
-func (slice OrderedSlice[T]) Append(item T) OrderedSlice[T] {
-	return golinq.Append(slice, item)
+func (s OrderedSlice[T]) Append(item T) OrderedSlice[T] {
+	return golinq.Append(s, item)
 }
 
-func (slice OrderedSlice[T]) Concat(items []T) OrderedSlice[T] {
-	return golinq.Concat(slice, items)
+func (s OrderedSlice[T]) Concat(items []T) OrderedSlice[T] {
+	return golinq.Concat(s, items)
 }
 
-func (slice OrderedSlice[T]) Any(filter func(x T) bool) bool {
-	return golinq.Any(slice, filter)
+func (s OrderedSlice[T]) Any(filter func(x T) bool) bool {
+	return golinq.Any(s, filter)
 }
 
-func (slice OrderedSlice[T]) All(filter func(x T) bool) bool {
-	return golinq.All(slice, filter)
+func (s OrderedSlice[T]) All(filter func(x T) bool) bool {
+	return golinq.All(s, filter)
 }
 
-func (slice OrderedSlice[T]) IsEmpty() bool {
-	return golinq.IsEmpty(slice)
+func (s OrderedSlice[T]) IsEmpty() bool {
+	return golinq.IsEmpty(s)
 }
 
-func (slice OrderedSlice[T]) Count() int {
-	return golinq.Count(slice)
+func (s OrderedSlice[T]) Count() int {
+	return golinq.Count(s)
 }
 
-func (slice OrderedSlice[T]) Contains(item T) bool {
+func (s OrderedSlice[T]) Contains(item T) bool {
 	isEqual := func(x, y T) bool {
 		return x == y
 	}
 
-	return golinq.Contains(slice, isEqual, item)
+	return golinq.Contains(s, isEqual, item)
 }
 
-func (slice OrderedSlice[T]) Where(filter func(x T) bool) OrderedSlice[T] {
-	return golinq.Where(slice, filter)
+func (s OrderedSlice[T]) Where(filter func(x T) bool) OrderedSlice[T] {
+	return golinq.Where(s, filter)
 }
 
-func (slice OrderedSlice[T]) Except(filter func(x T) bool) OrderedSlice[T] {
-	return golinq.Except(slice, filter)
+func (s OrderedSlice[T]) Except(filter func(x T) bool) OrderedSlice[T] {
+	return golinq.Except(s, filter)
 }
 
-func (slice OrderedSlice[T]) First(filter func(x T) bool) (T, error) {
-	return golinq.First(slice, filter)
+func (s OrderedSlice[T]) First(filter func(x T) bool) (T, error) {
+	return golinq.First(s, filter)
 }
 
-func (slice OrderedSlice[T]) Last(filter func(x T) bool) (T, error) {
-	return golinq.Last(slice, filter)
+func (s OrderedSlice[T]) Last(filter func(x T) bool) (T, error) {
+	return golinq.Last(s, filter)
 }
 
-func (slice OrderedSlice[T]) Take(count int) OrderedSlice[T] {
-	return golinq.Take(slice, count)
+func (s OrderedSlice[T]) Take(count int) OrderedSlice[T] {
+	return golinq.Take(s, count)
 }
 
-func (slice OrderedSlice[T]) Skip(count int) OrderedSlice[T] {
-	return golinq.Skip(slice, count)
+func (s OrderedSlice[T]) Skip(count int) OrderedSlice[T] {
+	return golinq.Skip(s, count)
 }
 
-func (slice OrderedSlice[T]) OrderBy(comparer func(x, y int) bool) OrderedSlice[T] {
-	return golinq.OrderBy(slice, comparer)
+func (s OrderedSlice[T]) OrderBy(comparer func(x, y int) bool) OrderedSlice[T] {
+	return golinq.OrderBy(s, comparer)
 }
 
-func (slice OrderedSlice[T]) OrderByAscending() OrderedSlice[T] {
-	return golinq.OrderByAscending(slice)
+func (s OrderedSlice[T]) OrderByAscending() OrderedSlice[T] {
+	return golinq.OrderByAscending(s)
 }
 
-func (slice OrderedSlice[T]) OrderByDescending() OrderedSlice[T] {
-	return golinq.OrderByDescending(slice)
+func (s OrderedSlice[T]) OrderByDescending() OrderedSlice[T] {
+	return golinq.OrderByDescending(s)
 }

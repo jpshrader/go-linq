@@ -314,7 +314,7 @@ func Test_TakeIntsReturnsAllAvailableNil(t *testing.T) {
 
 	result := numbers.Take(5)
 
-	var expected Slice[int]
+	expected := Slice[int]{}
 	assert.Equal(t, expected, result)
 }
 
@@ -332,7 +332,7 @@ func Test_SkipIntsReturnsAllAvailableExceptFirst5(t *testing.T) {
 
 	result := numbers.Skip(5)
 
-	var expected Slice[int]
+	expected := Slice[int]{}
 	assert.Equal(t, expected, result)
 }
 

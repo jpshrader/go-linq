@@ -314,7 +314,7 @@ func Test_TakeIntsReturnsAllAvailableNil(t *testing.T) {
 
 	result := Take(numbers, 5)
 
-	var expected []int
+	expected := []int{}
 	assert.Equal(t, expected, result)
 }
 
@@ -332,7 +332,7 @@ func Test_SkipIntsReturnsAllAvailableExceptFirst5(t *testing.T) {
 
 	result := Skip(numbers, 5)
 
-	var expected []int
+	expected := []int{}
 	assert.Equal(t, expected, result)
 }
 
@@ -368,7 +368,7 @@ func Test_SelectReturnsNil(t *testing.T) {
 
 	result := Select(persons, personTransformer)
 
-	var expected []string
+	expected := []string{}
 	assert.Equal(t, expected, result)
 }
 
@@ -386,7 +386,7 @@ func Test_DistinctIntsReturnsNil(t *testing.T) {
 
 	result := Distinct(numbers)
 
-	var expected []int
+	expected := []int{}
 	assert.Equal(t, expected, result)
 }
 
@@ -412,7 +412,7 @@ func Test_DistinctStructIntsReturnsNil(t *testing.T) {
 
 	result := DistinctC(numbers, transform)
 
-	var expected []int
+	expected := []int{}
 	assert.Equal(t, expected, result)
 }
 
@@ -439,7 +439,7 @@ func Test_DistinctStructReturnsNil(t *testing.T) {
 
 	result := DistinctC(persons, personTransformer)
 
-	var expected []person
+	expected := []person{}
 	assert.Equal(t, expected, result)
 }
 
@@ -652,7 +652,7 @@ func Test_ReverseIntsReturnsNil(t *testing.T) {
 
 	result := Reverse(numbers)
 
-	var expected []int
+	expected := []int{}
 	assert.Equal(t, expected, result)
 }
 

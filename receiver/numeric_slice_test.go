@@ -306,7 +306,7 @@ func Test_NumericTakeIntsReturnsAllAvailableNil(t *testing.T) {
 
 	result := numbers.Take(5)
 
-	var expected NumericSlice[int]
+	expected := NumericSlice[int]{}
 	assert.Equal(t, expected, result)
 }
 
@@ -324,7 +324,7 @@ func Test_NumericSkipIntsReturnsAllAvailableExceptFirst5(t *testing.T) {
 
 	result := numbers.Skip(5)
 
-	var expected NumericSlice[int]
+	expected := NumericSlice[int]{}
 	assert.Equal(t, expected, result)
 }
 
@@ -449,7 +449,7 @@ func Test_NumericReverseIntsReturnsNil(t *testing.T) {
 
 	result := numbers.Reverse()
 
-	var expected NumericSlice[int]
+	expected := NumericSlice[int]{}
 	assert.Equal(t, expected, result)
 }
 
@@ -467,6 +467,6 @@ func Test_DistinctIntsReturnsNil(t *testing.T) {
 
 	result := numbers.Distinct()
 
-	var expected NumericSlice[int]
+	expected := NumericSlice[int]{}
 	assert.Equal(t, expected, result)
 }
