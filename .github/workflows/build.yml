@@ -11,13 +11,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Go
+    - name: set up go
       uses: actions/setup-go@v4
       with:
         go-version: '1.21'
 
-    - name: Build
+    - name: build
       run: go build -v ./...
 
-    - name: Test & Coverage
+    - name: test & coverage
       run: go test -cover ./...
