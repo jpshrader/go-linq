@@ -37,24 +37,3 @@ func Benchmark_Where_Numeric(b *testing.B) {
 		numerics.Where(isEven)
 	}
 }
-
-func Benchmark_Append(b *testing.B) {
-	out := make([]int, 0, len(numbers))
-	for _, num := range numbers {
-		out = append(out, num)
-	}
-}
-
-func Benchmark_Append_Resize(b *testing.B) {
-	out := []int{}
-	for _, num := range numbers {
-		out = append(out, num)
-	}
-}
-
-func Benchmark_Index(b *testing.B) {
-	out := make([]int, len(numbers))
-	for i, num := range numbers {
-		out[i] = num
-	}
-}
