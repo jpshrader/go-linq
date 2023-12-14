@@ -1,5 +1,3 @@
-; https://editorconfig.org/
-
 root = true
 
 [*]
@@ -21,4 +19,8 @@ trim_trailing_whitespace = false
 eclint_indent_style = unset
 
 [Dockerfile]
+indent_size = 4
+
+[Makefile]
+indent_style = tab
 indent_size = 4
