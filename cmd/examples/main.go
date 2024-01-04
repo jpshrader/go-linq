@@ -5,7 +5,7 @@ import (
 	"reflect"
 
 	golinq "github.com/jpshrader/go-linq"
-	"github.com/jpshrader/go-linq/receiver"
+	"github.com/jpshrader/go-linq/slices"
 )
 
 func main() {
@@ -28,7 +28,7 @@ func numberExample() {
 
 	evenNums := golinq.Where(numbers, isEven)
 
-	nums := receiver.AsNumericSlice(numbers)
+	nums := slices.AsNumericSlice(numbers)
 	oddNums := nums.Where(isOdd)
 
 	linqFun := oddNums.
@@ -51,8 +51,8 @@ func constraintExample() {
 	numbers := []int{9, 6, 5, 4, 8, 2, 7, 3, 1, 0}
 	strings := []string{"j", "f", "g", "c", "a", "h", "b", "e", "i", "d"}
 
-	nums := receiver.AsNumericSlice(numbers)
-	strs := receiver.AsOrderedSlice(strings)
+	nums := slices.AsNumericSlice(numbers)
+	strs := slices.AsOrderedSlice(strings)
 
 	fmt.Println("================= CONSTRAINTS EXAMPLE =================")
 	fmt.Printf("nums: %d\n", nums.OrderByAscending())
@@ -77,7 +77,7 @@ func typeExample() {
 	above25 := func(p Person) bool {
 		return p.Age >= 25
 	}
-	personsSlice := receiver.AsSlice(persons)
+	personsSlice := slices.AsSlice(persons)
 	fmt.Println("persons under 25 years old: ", personsSlice.Except(above25))
 	fmt.Println("persons above 25 years old: ", personsSlice.Where(above25))
 

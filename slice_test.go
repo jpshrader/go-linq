@@ -292,6 +292,15 @@ func Test_LastIntsReturnsNotFound(t *testing.T) {
 	assert.Equal(t, 0, result)
 }
 
+func Test_LastIntsReturns(t *testing.T) {
+	numbers := []int{0, 2}
+
+	result, err := Last(numbers, nil)
+
+	assert.Nil(t, err)
+	assert.Equal(t, 2, result)
+}
+
 // TAKE
 func Test_TakeIntsReturnsFirst5(t *testing.T) {
 	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
@@ -398,7 +407,7 @@ func Test_DistinctStructIntsReturns(t *testing.T) {
 		return x
 	}
 
-	result := DistinctC(numbers, transform)
+	result := DistinctBy(numbers, transform)
 
 	assert.Equal(t, []int{0, 1, 2, 3, 4, 5}, result)
 }
@@ -410,7 +419,7 @@ func Test_DistinctStructIntsReturnsNil(t *testing.T) {
 		return x
 	}
 
-	result := DistinctC(numbers, transform)
+	result := DistinctBy(numbers, transform)
 
 	expected := []int{}
 	assert.Equal(t, expected, result)
@@ -429,7 +438,7 @@ func Test_DistinctStructReturns(t *testing.T) {
 
 	persons := []person{p1, p2, p1, p2, p3}
 
-	result := DistinctC(persons, personTransformer)
+	result := DistinctBy(persons, personTransformer)
 
 	assert.Equal(t, []person{p1, p2, p3}, result)
 }
@@ -437,7 +446,7 @@ func Test_DistinctStructReturns(t *testing.T) {
 func Test_DistinctStructReturnsNil(t *testing.T) {
 	persons := []person{}
 
-	result := DistinctC(persons, personTransformer)
+	result := DistinctBy(persons, personTransformer)
 
 	expected := []person{}
 	assert.Equal(t, expected, result)
@@ -502,7 +511,7 @@ func Test_MaxIntsReturns(t *testing.T) {
 func Test_MaxIntsReturnsNil(t *testing.T) {
 	numbers := []int{}
 
-	result := MaxC(numbers, getNum)
+	result := MaxBy(numbers, getNum)
 
 	assert.Equal(t, 0, result)
 }
@@ -510,7 +519,7 @@ func Test_MaxIntsReturnsNil(t *testing.T) {
 func Test_MaxCIntsReturns(t *testing.T) {
 	numbers := []int{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
 
-	result := MaxC(numbers, getNum)
+	result := MaxBy(numbers, getNum)
 
 	assert.Equal(t, 9, result)
 }
@@ -551,7 +560,7 @@ func Test_MinIntsReturnsNil(t *testing.T) {
 func Test_MinCIntsReturns(t *testing.T) {
 	numbers := []int{3, 7, 6, 9, 8, 0, 4, 2, 1, 5}
 
-	result := MinC(numbers, getNum)
+	result := MinBy(numbers, getNum)
 
 	assert.Equal(t, 0, result)
 }
@@ -559,7 +568,7 @@ func Test_MinCIntsReturns(t *testing.T) {
 func Test_MinCIntsReturnsLast(t *testing.T) {
 	numbers := []int{3, 7, 6, 9, 8, 0, 4, 2, 1, 5, -1}
 
-	result := MinC(numbers, getNum)
+	result := MinBy(numbers, getNum)
 
 	assert.Equal(t, -1, result)
 }
@@ -567,7 +576,7 @@ func Test_MinCIntsReturnsLast(t *testing.T) {
 func Test_MinCIntsReturnsNil(t *testing.T) {
 	numbers := []int{}
 
-	result := MinC(numbers, getNum)
+	result := MinBy(numbers, getNum)
 
 	assert.Equal(t, 0, result)
 }
@@ -589,18 +598,18 @@ func Test_SumIntsReturnsNil(t *testing.T) {
 	assert.Equal(t, 0, result)
 }
 
-func Test_SumCIntsReturns(t *testing.T) {
+func Test_SumByIntsReturns(t *testing.T) {
 	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 
-	result := SumC(numbers, getNum)
+	result := SumBy(numbers, getNum)
 
 	assert.Equal(t, 45, result)
 }
 
-func Test_SumCIntsReturnsNil(t *testing.T) {
+func Test_SumByIntsReturnsNil(t *testing.T) {
 	numbers := []int{}
 
-	result := SumC(numbers, getNum)
+	result := SumBy(numbers, getNum)
 
 	assert.Equal(t, 0, result)
 }
@@ -625,7 +634,7 @@ func Test_AverageIntsReturnsNil(t *testing.T) {
 func Test_AverageCIntsReturns(t *testing.T) {
 	numbers := []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 
-	result := AverageC(numbers, getNum)
+	result := AverageBy(numbers, getNum)
 
 	assert.Equal(t, 4.5, result)
 }
@@ -633,7 +642,7 @@ func Test_AverageCIntsReturns(t *testing.T) {
 func Test_AverageCIntsReturnsNil(t *testing.T) {
 	numbers := []int{}
 
-	result := AverageC(numbers, getNum)
+	result := AverageBy(numbers, getNum)
 
 	assert.Equal(t, float64(0), result)
 }

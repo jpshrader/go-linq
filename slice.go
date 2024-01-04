@@ -82,17 +82,14 @@ func First[T any](items []T, isMatch func(x T) bool) (T, error) {
 }
 
 func Last[T any](items []T, isMatch func(x T) bool) (T, error) {
-	var last T
-	found := false
-	for _, item := range items {
-		if isMatch(item) {
-			last = item
-			found = true
-		}
+	if isMatch == nil {
+		isMatch = NilPredicate[T]
 	}
-
-	if found {
-		return last, nil
+	for i := len(items) - 1; i >= 0; i-- {
+		item := items[i]
+		if isMatch(item) {
+			return item, nil
+		}
 	}
 	return *new(T), NotFoundError{}
 }
@@ -140,7 +137,7 @@ func Distinct[T comparable](items []T) []T {
 	return out
 }
 
-func DistinctC[T any, R comparable](items []T, mapper func(x T) R) []T {
+func DistinctBy[T any, R comparable](items []T, mapper func(x T) R) []T {
 	out := make([]T, 0, len(items))
 	existingItems := make(map[R]bool, len(items))
 	for _, item := range items {
@@ -182,7 +179,7 @@ func Sum[T Number](items []T) T {
 	return out
 }
 
-func SumC[T any, R Number](items []T, mapper func(x T) R) R {
+func SumBy[T any, R Number](items []T, mapper func(x T) R) R {
 	out := R(0)
 	for _, item := range items {
 		out += mapper(item)
@@ -198,10 +195,10 @@ func Average[T Number](items []T) float64 {
 	return 0
 }
 
-func AverageC[T any, R Number](items []T, mapper func(x T) R) float64 {
+func AverageBy[T any, R Number](items []T, mapper func(x T) R) float64 {
 	length := len(items)
 	if length > 0 {
-		return float64(SumC(items, mapper)) / float64(length)
+		return float64(SumBy(items, mapper)) / float64(length)
 	}
 	return 0
 }
@@ -216,7 +213,7 @@ func Max[T Number](items []T) T {
 	return out
 }
 
-func MaxC[T any, R constraints.Ordered](items []T, mapper func(x T) R) T {
+func MaxBy[T any, R constraints.Ordered](items []T, mapper func(x T) R) T {
 	out := *new(T)
 	for _, item := range items {
 		if mapper(item) > mapper(out) {
@@ -236,7 +233,7 @@ func Min[T Number](items []T) T {
 	return out
 }
 
-func MinC[T any, R constraints.Ordered](items []T, mapper func(x T) R) T {
+func MinBy[T any, R constraints.Ordered](items []T, mapper func(x T) R) T {
 	out := *new(T)
 	for _, item := range items {
 		if mapper(item) < mapper(out) {

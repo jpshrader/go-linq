@@ -1,4 +1,4 @@
-package receiver
+package slices
 
 import (
 	golinq "github.com/jpshrader/go-linq"

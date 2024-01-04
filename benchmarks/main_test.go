@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	golinq "github.com/jpshrader/go-linq"
-	"github.com/jpshrader/go-linq/receiver"
+	"github.com/jpshrader/go-linq/slices"
 )
 
 func isEven(x int) bool {
@@ -12,7 +12,7 @@ func isEven(x int) bool {
 }
 
 var numbers = []int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
-var numerics = receiver.AsNumericSlice(numbers)
+var numerics = slices.AsNumericSlice(numbers)
 
 func Benchmark_Where_ForLoop(b *testing.B) {
 	var evenNums []int

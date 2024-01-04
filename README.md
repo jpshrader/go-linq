@@ -1,6 +1,6 @@
 # Linq with Go
 
-An attempt to recreate the ease and usefulness of the [linq dotnet library](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable?view=net-7.0) in golang.
+An attempt to recreate the ease and usefulness of the [linq dotnet library](https://learn.microsoft.com/en-us/dotnet/api/system.linq.enumerable?view=net-8.0) in golang.
 
 ## Usage
 
@@ -13,7 +13,7 @@ import (
 	"fmt"
 
 	golinq "github.com/jpshrader/go-linq"
-	"github.com/jpshrader/go-linq/receiver"
+	"github.com/jpshrader/go-linq/slices"
 )
 
 func isEven(x int) bool {
@@ -31,7 +31,7 @@ func main() {
 	evenNums := golinq.Where(numbers, isEven)
 	fmt.Printf("even numbers: %v\n", evenNums)
 
-	nums := receiver.AsNumericSlice(numbers)
+	nums := slices.AsNumericSlice(numbers)
 	oddNums := nums.Where(isOdd)
 	fmt.Printf("odd numbers: %v\n", oddNums)
 }
